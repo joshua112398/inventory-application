@@ -6,7 +6,7 @@ const CharacterSchema = new Schema({
   name: String,
   title: String,
   vision: { type: Schema.Types.ObjectId, ref: "Vision" },
-  weaponType: { type: Schema.Types.ObjectId, ref: "Weapon" },
+  weapon: { type: Schema.Types.ObjectId, ref: "Weapon" },
   role: [{ type: Schema.Types.ObjectId, ref: "Role" }],
   rating: Number,
   amount: Number,
