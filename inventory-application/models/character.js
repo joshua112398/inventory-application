@@ -3,13 +3,13 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const CharacterSchema = new Schema({
-  name: String,
-  title: String,
-  vision: { type: Schema.Types.ObjectId, ref: "Vision" },
+  name: { type: String, required: true },
+  title: { type: String, required: true },
+  vision: { type: Schema.Types.ObjectId, ref: "Vision", required: true },
   weapon: { type: Schema.Types.ObjectId, ref: "Weapon" },
-  role: [{ type: Schema.Types.ObjectId, ref: "Role" }],
-  rating: Number,
-  amount: Number,
+  role: [{ type: Schema.Types.ObjectId, ref: "Role", required: true }],
+  rating: { type: Number, required: true },
+  amount: { type: Number, required: true },
 });
 
 module.exports = mongoose.model("Character", CharacterSchema);
