@@ -29,7 +29,8 @@ const createRole = async function(name, description) {
     roles.push(role);
   } 
   catch (err) {
-    return handleError(err);
+    console.log(err);
+    return;
   }
 };
 
@@ -47,7 +48,8 @@ const createWeapon = async function(name, description) {
     weapons.push(weapon);
   }
   catch (err) {
-    return handleError(err);
+    console.log(err);
+    return;
   }
 };
 
@@ -65,7 +67,8 @@ const createVision = async function(name, color) {
     visions.push(vision);
   }
   catch (err) {
-    return handleError(err);
+    console.log(err);
+    return;
   }
 };
 
@@ -83,13 +86,16 @@ const createCharacter = async function(name, title, vision, weapon, role, rating
   
   const char = new Character(charDetail);
 
+  console.log(`type of Char is ${typeof(char)}`);
+
   try {
     await char.save();
     console.log("New Character: " + char);
     characters.push(char);
   }
   catch (err) {
-    return handleError(err);
+    console.log(err);
+    return;
   }
 };
 
@@ -108,6 +114,11 @@ const createCharacter = async function(name, title, vision, weapon, role, rating
     createVision("Geo", "Gold"),
     createVision("Electro", "Purple"),
     createVision("Dendro", "Green"),
-    createVision("")
+    createVision("Pyro", "Red"),
+    createVision("Hydro", "Blue"),
+    createVision("Cryo", "Light Blue")
   ]);
+  await createWeapon("The Bell", "Description");
+  await createCharacter("Albedo", "Kreideprinz", visions[1], false, [roles[1], roles[2]], 4.67, 1);
+  await createCharacter("Itto", "Oni", visions[1], weapons[0], roles[0], 4.8, 2);
 })();
