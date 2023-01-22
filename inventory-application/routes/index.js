@@ -6,9 +6,7 @@ const router = express.Router();
 router.get('/', characterController.index);
 
 /* GET characters page */
-router.get('/characters', function (req, res, next) {
-  res.send("Characters Page: Not Implemented");
-});
+router.get('/characters', characterController.characterList);
 
 /* GET character detail page */
 router.get('/characters/:characterId', function (req, res, next) {
