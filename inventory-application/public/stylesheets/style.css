@@ -1,8 +1,15 @@
 body {
-  padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 a {
   color: #00B7FF;
+}
+
+.fixed-width-panel {
+  width: 100px;
+}
+
+.fixed-width-nav {
+  width: 150px;
 }

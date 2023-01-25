@@ -12,7 +12,12 @@ exports.index = async (req, res, next) => {
 
 exports.characterList = async (req, res, next) => {
   try {
-    const characters = await Character.find({}).populate('vision').populate('weapon').populate('role');
+    const characters = await Character.find({})
+      .sort({name: 1})
+      .populate('vision')
+      .populate('weapon')
+      .populate('role')
+      .exec();
     console.log(characters);
     res.render("characterList", {
       title: "Characters",
@@ -20,6 +25,6 @@ exports.characterList = async (req, res, next) => {
     });
   }
   catch(err) {
-    console.log(err);
+    return next(err);
   }
 };
