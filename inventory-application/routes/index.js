@@ -1,5 +1,6 @@
 const express = require('express');
 const characterController = require('../controllers/characterController');
+const visionController = require('../controllers/visionController');
 const router = express.Router();
 
 /* GET home page, which is redirected to the characters page */
@@ -24,9 +25,7 @@ router.post('/characters/create', function (req, res, next) {
 });
 
 /* GET visions page */
-router.get('/visions', function (req, res, next) {
-  res.send("Visions Page: Not Implemented");
-});
+router.get('/visions', visionController.visionList);
 
 /* GET vision detail page */
 router.get('/visions/:visionId', function (req, res, next) {
