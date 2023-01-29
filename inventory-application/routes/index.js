@@ -12,9 +12,7 @@ router.get('/', characterController.index);
 router.get('/characters', characterController.characterList);
 
 /* GET character detail page */
-router.get('/characters/:characterId', function (req, res, next) {
-  res.send("Character Detail Page: Not Implemented");
-});
+router.get('/characters/:id', characterController.characterDetail);
 
 /* GET character create page */
 router.get('/characters/create', function (req, res, next) {
