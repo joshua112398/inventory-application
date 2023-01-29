@@ -1,6 +1,8 @@
 const express = require('express');
 const characterController = require('../controllers/characterController');
 const visionController = require('../controllers/visionController');
+const weaponController = require('../controllers/weaponController');
+const roleController = require('../controllers/roleController');
 const router = express.Router();
 
 /* GET home page, which is redirected to the characters page */
@@ -33,9 +35,7 @@ router.get('/visions/:visionId', function (req, res, next) {
 });
 
 /* GET weapons page */
-router.get('/weapons', function (req, res, next) {
-  res.send("Weapons Page: Not Implemented");
-});
+router.get('/weapons', weaponController.weaponList);
 
 /* GET weapon detail page */
 router.get('/weapons/:weaponId', function (req, res, next) {
@@ -43,8 +43,6 @@ router.get('/weapons/:weaponId', function (req, res, next) {
 });
 
 /* GET roles page */
-router.get('/roles', function (req, res, next) {
-  res.send("Roles Page: Not Implemented");
-});
+router.get('/roles', roleController.roleList);
 
 module.exports = router;

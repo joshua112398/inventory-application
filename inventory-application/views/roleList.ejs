@@ -8,9 +8,9 @@
     <div class="d-flex vh-100">
       <%- include('./partials/nav'); %>
       <main class="container text-center p-4 d-flex flex-column">
-        <% visionList.forEach((vision) => { %>
+        <% roleList.forEach((role) => { %>
           <div class="fixed-width-vision-panel border d-flex flex-column">
-            <h6><%= vision.name %></h6>
+            <h6><%= role.name %></h6>
           </div>
         <% }); %>
       </main>
