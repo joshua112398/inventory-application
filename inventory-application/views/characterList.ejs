@@ -11,11 +11,11 @@
         <div class="row">
           <% characterList.forEach((character) => { %>
             <div class="fixed-width-panel border d-flex flex-column">
-              <h6><%= character.name %></h6>
+              <h6><a href="<%= character.url %>"><%= character.name %></a></h6>
               <p><%= character.title %></p>
               <p><%= character.vision.name %></p>
-              <% character.role.forEach((charRole) => { %>
-                <p><%= charRole.name %></p>
+              <% character.role.forEach((role) => { %>
+                <p><%= role.name %></p>
               <% }); %>
             </div>
           <% }); %>

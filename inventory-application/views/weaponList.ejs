@@ -11,7 +11,7 @@
         <div class="row">
           <% weaponList.forEach((weapon) => { %>
             <div class="fixed-width-panel border d-flex flex-column">
-              <h6><%= weapon.name %></h6>
+              <h6><a href="<%= weapon.url %>"><%= weapon.name %></a></h6>
             </div>
           <% }); %>
         </div>

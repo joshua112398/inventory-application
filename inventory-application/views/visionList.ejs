@@ -10,7 +10,7 @@
       <main class="container text-center p-4 d-flex flex-column">
         <% visionList.forEach((vision) => { %>
           <div class="fixed-width-vision-panel border d-flex flex-column">
-            <h6><%= vision.name %></h6>
+            <h6><a href="<%= vision.url %>"><%= vision.name %></a></h6>
           </div>
         <% }); %>
       </main>

@@ -12,4 +12,8 @@ const CharacterSchema = new Schema({
   amount: { type: Number, required: true },
 });
 
+CharacterSchema.virtual('url').get(function() {
+  return `/characters/${this._id}`;
+});
+
 module.exports = mongoose.model("Character", CharacterSchema);

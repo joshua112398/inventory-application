@@ -10,7 +10,7 @@
       <main class="container text-center p-4 d-flex flex-column">
         <% roleList.forEach((role) => { %>
           <div class="fixed-width-vision-panel border d-flex flex-column">
-            <h6><%= role.name %></h6>
+            <h6><a href="<%= role.url %>"><%= role.name %></a></h6>
           </div>
         <% }); %>
       </main>

@@ -43,4 +43,7 @@ router.get('/weapons/:weaponId', function (req, res, next) {
 /* GET roles page */
 router.get('/roles', roleController.roleList);
 
+/* GET role detail page */
+router.get('/roles/:roleId', roleController.roleDetail);
+
 module.exports = router;
