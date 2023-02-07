@@ -43,10 +43,13 @@ exports.characterDetail = async (req, res, next) => {
       err.status = 404;
       return next(err);
     }
+    // Check if character has a weapon
+    let charWeapon = (character.weapon == null) ? "None" : character.weapon.name;
     // Successfully found, so render
     res.render("characterDetail", {
       title: character.name,
       character: character,
+      weapon: charWeapon,
     });
   }
   catch(err) {

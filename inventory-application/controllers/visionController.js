@@ -12,3 +12,24 @@ exports.visionList = async (req, res, next) => {
     return next(err);
   }
 };
+
+exports.visionDetail = async (req, res, next) => {
+  try {
+    const vision = await Vision.findOne({_id: req.params.id}).exec();
+    console.log(vision);
+    // If vision is not found
+    if (vision == null) {
+      const err = new Error("Vision not found");
+      err.status = 404;
+      return next(err);
+    }
+    // Successfully found
+    res.render("visionDetail", {
+      title: vision.name,
+      vision: vision,
+    });
+  }
+  catch (err) {
+    return next(err);
+  }
+};

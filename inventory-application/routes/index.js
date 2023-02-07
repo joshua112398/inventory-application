@@ -28,22 +28,18 @@ router.post('/characters/create', function (req, res, next) {
 router.get('/visions', visionController.visionList);
 
 /* GET vision detail page */
-router.get('/visions/:visionId', function (req, res, next) {
-  res.send("Vision Detail Page: Not Implemented");
-});
+router.get('/visions/:id', visionController.visionDetail);
 
 /* GET weapons page */
 router.get('/weapons', weaponController.weaponList);
 
 /* GET weapon detail page */
-router.get('/weapons/:weaponId', function (req, res, next) {
-  res.send("Weapon Detail Page: Not Implemented");
-});
+router.get('/weapons/:id', weaponController.weaponDetail);
 
 /* GET roles page */
 router.get('/roles', roleController.roleList);
 
 /* GET role detail page */
-router.get('/roles/:roleId', roleController.roleDetail);
+router.get('/roles/:id', roleController.roleDetail);
 
 module.exports = router;

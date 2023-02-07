@@ -15,7 +15,7 @@ exports.roleList = async (req, res, next) => {
 
 exports.roleDetail = async (req, res, next) => {
   try {
-    const role = await Role.find({_id: req.params.id}).exec();
+    const role = await Role.findOne({_id: req.params.id}).exec();
     if (role == null) {
       const err = new Error("Role not found");
       err.status = 404;
