@@ -42,6 +42,9 @@ router.get('/weapons/:id', weaponController.weaponDetail);
 /* GET roles page */
 router.get('/roles', roleController.roleList);
 
+/* GET role create form page */
+router.get('/roles/create', roleController.roleCreateGet);
+
 /* GET role detail page */
 router.get('/roles/:id', roleController.roleDetail);
 

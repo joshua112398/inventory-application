@@ -9,13 +9,13 @@
       <%- include('./partials/nav'); %>
       <main class="container text-center p-4">
         <form class="d-flex flex-column form-width">
-          <div class="mb-3">
-            <label for="name">Name of Vision:</label>
-            <input type="text" id="name" name="name" required="true" minlength="1" maxlength="15">
+          <div class="mb-3 w-100">
+            <label for="name">Name of Role:</label>
+            <input type="text" id="name" name="name" required="true" minlength="1" maxlength="25">
           </div>
           <div class="mb-3">
-            <label for="color">Color:</label>
-            <input type="color" required="true" title="Choose Vision Color" class="form-control form-control-color" id="color" name="color">
+            <label for="description">Name of Role:</label>
+            <textarea type="textarea" id="description" name="description" required="true" rows="3" minlength="1"></textarea>
           </div>
           <button type="submit" class="btn btn-primary">Add</button>
         </form>

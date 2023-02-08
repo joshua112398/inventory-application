@@ -30,3 +30,9 @@ exports.roleDetail = async (req, res, next) => {
     return next(err);
   }
 }
+
+exports.roleCreateGet = async (req, res, next) => {
+  res.render("roleCreate", {
+    title: "Create a Role",
+  });
+};
