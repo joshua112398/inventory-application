@@ -17,3 +17,7 @@ a {
 .fixed-width-nav {
   width: 150px;
 }
+
+.form-width {
+  max-width: 300px;
+}

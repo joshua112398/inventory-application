@@ -33,3 +33,9 @@ exports.visionDetail = async (req, res, next) => {
     return next(err);
   }
 };
+
+exports.visionCreateGet = (req, res, next) => {
+  res.render("visionCreate", {
+    title: "Add a Vision",
+  })
+};

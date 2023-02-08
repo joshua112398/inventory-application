@@ -27,6 +27,9 @@ router.post('/characters/create', function (req, res, next) {
 /* GET visions page */
 router.get('/visions', visionController.visionList);
 
+/* GET vision create form page */
+router.get('/visions/create', visionController.visionCreateGet);
+
 /* GET vision detail page */
 router.get('/visions/:id', visionController.visionDetail);
 
