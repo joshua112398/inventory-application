@@ -56,3 +56,26 @@ exports.characterDetail = async (req, res, next) => {
     return next(err);
   }
 };
+
+exports.characterCreateGet = async (req, res, next) => {
+  try {
+    const visions = await Vision.find({})
+      .sort({name: 1})
+      .exec();
+    const weapons = await Weapon.find({})
+      .sort({name: 1})
+      .exec();
+    const roles = await Role.find({})
+      .sort({name: 1})
+      .exec();
+    res.render("characterCreate", {
+      title: "Add a Character",
+      visions: visions,
+      weapons: weapons,
+      roles: roles,
+    });
+  }
+  catch(err) {
+    return next(err);
+  }
+};

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('./partials/head'); %>
+    <title><%= title %></title>
+  </head>
+  <body>
+    <div class="d-flex vh-100">
+      <%- include('./partials/nav'); %>
+      <main class="container text-center p-4">
+        <form class="d-flex flex-column form-width">
+          <div class="mb-3 w-100">
+            <label for="name">Character Name:</label>
+            <input type="text" id="name" name="name" required="true" minlength="1" maxlength="25">
+          </div>
+          <div class="mb-3 w-100">
+            <label for="name">Character Title:</label>
+            <input type="text" id="title" name="title" required="true" minlength="1" maxlength="50">
+          </div>
+          <div class="mb-3 w-100">
+            <label for="vision">Vision:</label>
+            <select class="form-select" id="vision" name="vision" required="true">
+            <% visions.forEach((vision) => { %>
+                <% console.log(vision.name) %>
+                <option value="<%= vision.name %>"><%= vision.name %></option>
+            <% }); %>
+            </select>
+          </div>
+          <div class="mb-3 w-100">
+            <label for="weapon">Weapon:</label>
+            <select class="form-select" id="weapon" name="weapon" required="true">
+            <% weapons.forEach((weapon) => { %>
+                <% console.log(weapon.name) %>
+                <option value="<%= weapon.name %>"><%= weapon.name %></option>
+            <% }); %>
+            </select>
+          </div>
+          <div class="mb-3 w-100">
+            <label for="role">Role:</label>
+            <select class="form-select" id="role" name="role" required="true">
+            <% roles.forEach((role) => { %>
+                <% console.log(role.name) %>
+                <option value="<%= role.name %>"><%= role.name %></option>
+            <% }); %>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-primary">Add</button>
+        </form>
+      </main>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+  </body>
+</html>

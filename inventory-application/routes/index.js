@@ -11,17 +11,15 @@ router.get('/', characterController.index);
 /* GET characters page */
 router.get('/characters', characterController.characterList);
 
+/* POST character create */
+router.get('/characters/create', characterController.characterCreateGet);
+
 /* GET character detail page */
 router.get('/characters/:id', characterController.characterDetail);
 
-/* GET character create page */
-router.get('/characters/create', function (req, res, next) {
-  res.send("Character Create Page: Not Implemented");
-});
-
-/* POST character create */
+/* POST character create page */
 router.post('/characters/create', function (req, res, next) {
-  res.send("Character Create Post: Not Implemented");
+  res.send("Character Create Page: Not Implemented");
 });
 
 /* GET visions page */
