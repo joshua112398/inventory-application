@@ -36,6 +36,9 @@ router.get('/visions/:id', visionController.visionDetail);
 /* GET weapons page */
 router.get('/weapons', weaponController.weaponList);
 
+/* GET weapon create form page */
+router.get('/weapons/create', weaponController.weaponCreateGet);
+
 /* GET weapon detail page */
 router.get('/weapons/:id', weaponController.weaponDetail);
 

@@ -11,7 +11,7 @@ exports.weaponList = async (req, res, next) => {
   catch(err) {
     return next(err);
   }
-}
+};
 
 exports.weaponDetail = async (req, res, next) => {
   try {
@@ -31,4 +31,10 @@ exports.weaponDetail = async (req, res, next) => {
   catch(err) {
     return next(err);
   }
-}
+};
+
+exports.weaponCreateGet = async (req, res, next) => {
+  res.render("weaponCreate", {
+    title: "Add New Weapon",
+  });
+};
