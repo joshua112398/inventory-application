@@ -13,37 +13,47 @@
             <label for="name">Character Name:</label>
             <input type="text" id="name" name="name" required="true" minlength="1" maxlength="25">
           </div>
+
           <div class="mb-3 w-100">
             <label for="name">Character Title:</label>
             <input type="text" id="title" name="title" required="true" minlength="1" maxlength="50">
           </div>
+
           <div class="mb-3 w-100">
             <label for="vision">Vision:</label>
-            <select class="form-select" id="vision" name="vision" required="true">
+            <select class="form-select form-select-sm" id="vision" name="vision" required="true">
             <% visions.forEach((vision) => { %>
                 <% console.log(vision.name) %>
                 <option value="<%= vision.name %>"><%= vision.name %></option>
             <% }); %>
             </select>
           </div>
+
           <div class="mb-3 w-100">
             <label for="weapon">Weapon:</label>
-            <select class="form-select" id="weapon" name="weapon" required="true">
+            <select class="form-select form-select-sm" id="weapon" name="weapon" required="true">
             <% weapons.forEach((weapon) => { %>
                 <% console.log(weapon.name) %>
                 <option value="<%= weapon.name %>"><%= weapon.name %></option>
             <% }); %>
             </select>
           </div>
+
           <div class="mb-3 w-100">
             <label for="role">Role:</label>
-            <select class="form-select" id="role" name="role" required="true">
+            <select class="form-select form-select-sm" id="role" name="role" required="true">
             <% roles.forEach((role) => { %>
                 <% console.log(role.name) %>
                 <option value="<%= role.name %>"><%= role.name %></option>
             <% }); %>
             </select>
           </div>
+
+          <div class="mb-3 w-100">
+            <label for="amount">Amount:</label>
+            <input type="number" id="amount" name="amount" required="true" min="1" max="7">
+          </div>
+
           <button type="submit" class="btn btn-primary">Add</button>
         </form>
       </main>
