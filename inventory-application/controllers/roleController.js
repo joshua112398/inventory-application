@@ -34,5 +34,6 @@ exports.roleDetail = async (req, res, next) => {
 exports.roleCreateGet = async (req, res, next) => {
   res.render("roleCreate", {
     title: "Create a Role",
+    errors: null,
   });
 };

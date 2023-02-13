@@ -1,4 +1,6 @@
 const Vision = require("../models/vision");
+const { body, validationResult } = require("express-validator");
+const vision = require("../models/vision");
 
 exports.visionList = async (req, res, next) => {
   try {
@@ -37,5 +39,44 @@ exports.visionDetail = async (req, res, next) => {
 exports.visionCreateGet = (req, res, next) => {
   res.render("visionCreate", {
     title: "Add a Vision",
-  })
+    vision: {name: '', color: '#351764'},
+    errors: null,
+  });
 };
+
+exports.visionCreatePost = [
+  // Validate and sanitize
+  body("name")
+    .trim()
+    .isLength({min: 1})
+    .escape()
+    .withMessage("Name must be specified.")
+    .isAlphanumeric()
+    .withMessage("Name must contain only letters and numbers."),
+  // Process request
+  (req, res, next) => {
+    const errors = validationResult(req);
+
+    // If there's errors, rerender form with sanitized values
+    if (!errors.isEmpty()) {
+      res.render("visionCreate", {
+        title: "Add a Vision",
+        vision: req.body,
+        errors: errors.array(),
+      });
+      return;
+    }
+
+    // If no errors are present, create a Vision object with sanitized data
+    const vision = new Vision({
+      name: req.body.name,
+      color: req.body.color,
+    });
+    vision.save((err) => {
+      if (err) {
+        return next(err);
+      }
+      res.redirect(vision.url);
+    });
+  },
+];

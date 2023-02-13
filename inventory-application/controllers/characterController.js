@@ -73,6 +73,7 @@ exports.characterCreateGet = async (req, res, next) => {
       visions: visions,
       weapons: weapons,
       roles: roles,
+      errors: null,
     });
   }
   catch(err) {

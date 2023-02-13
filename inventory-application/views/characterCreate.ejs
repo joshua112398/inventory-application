@@ -50,12 +50,26 @@
           </div>
 
           <div class="mb-3 w-100">
+            <label for="rating">Rating: <span id="rating-value">0</span></label>
+            <input value="0" type="range" class="form-range" id="rating" 
+              onInput="document.getElementById('rating-value').textContent = document.getElementById('rating').value" 
+              name="rating" required="true" min="0" step="0.1" max="5">
+          </div>
+
+          <div class="mb-3 w-100">
             <label for="amount">Amount:</label>
             <input type="number" id="amount" name="amount" required="true" min="1" max="7">
           </div>
 
           <button type="submit" class="btn btn-primary">Add</button>
         </form>
+        <% if (errors) { %>
+          <ul class="list-group form-width">
+            <% errors.forEach((error) => { %>
+              <li class="list-group-item list-group-item-danger"><%= error.msg %></li>
+            <% }) %>
+          </ul>
+        <% }; %>
       </main>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>

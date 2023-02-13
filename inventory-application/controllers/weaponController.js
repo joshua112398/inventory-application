@@ -36,5 +36,6 @@ exports.weaponDetail = async (req, res, next) => {
 exports.weaponCreateGet = async (req, res, next) => {
   res.render("weaponCreate", {
     title: "Add New Weapon",
+    errors: null,
   });
 };

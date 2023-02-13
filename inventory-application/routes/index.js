@@ -28,6 +28,9 @@ router.get('/visions', visionController.visionList);
 /* GET vision create form page */
 router.get('/visions/create', visionController.visionCreateGet);
 
+/* POST vision create form page */
+router.post('/visions/create', visionController.visionCreatePost);
+
 /* GET vision detail page */
 router.get('/visions/:id', visionController.visionDetail);
 
