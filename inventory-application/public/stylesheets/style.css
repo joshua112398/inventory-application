@@ -21,3 +21,8 @@ a {
 .form-width {
   max-width: 500px;
 }
+
+.btn-size {
+  min-width: 100px;
+  width: min-content;
+}

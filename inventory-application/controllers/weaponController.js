@@ -1,4 +1,5 @@
 const Weapon = require("../models/weapon");
+const { body, validationResult } = require("express-validator");
 
 exports.weaponList = async (req, res, next) => {
   try {

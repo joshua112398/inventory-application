@@ -8,4 +8,6 @@ Users can add new characters, update existing characters, remove characters, and
 
 # Roadblocks
 
-I was unaware that find() in mongoose returns a pointer (cursor), and so accessing a field directly will return undefined. However, findOne() will return a document and hence  you can access its fields directly
+I was unaware that find() in mongoose returns a pointer (cursor), and so accessing a field directly will return undefined. However, findOne() will return a document and hence  you can access its fields directly.
+
+I find myself having to look up syntax a lot in this project for Bootstrap, EJS, Express.js/Node.js, and Mongoose/MongoDB. I haven't used any of these extensively before in any previous projects so I don't have a lot of the syntax memorized yet. 

@@ -37,6 +37,7 @@ exports.visionDetail = async (req, res, next) => {
 };
 
 exports.visionCreateGet = (req, res, next) => {
+  // Render form with empty/default values
   res.render("visionCreate", {
     title: "Add a Vision",
     vision: {name: '', color: '#351764'},
