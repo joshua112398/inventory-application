@@ -4,6 +4,7 @@ const Character = require("../models/character");
 const Role = require("../models/role");
 const Vision = require("../models/vision");
 const Weapon = require("../models/weapon");
+const { body, validationResult } = require("express-validator");
 
 exports.index = async (req, res, next) => {
   res.render("index", {
@@ -43,13 +44,11 @@ exports.characterDetail = async (req, res, next) => {
       err.status = 404;
       return next(err);
     }
-    // Check if character has a weapon
-    let charWeapon = (character.weapon == null) ? "None" : character.weapon.name;
-    // Successfully found, so render
+    // Successfully found, so render. Undefined weapons are dealt with on the front end
     res.render("characterDetail", {
       title: character.name,
       character: character,
-      weapon: charWeapon,
+      weapon: character.weapon,
     });
   }
   catch(err) {
@@ -59,6 +58,7 @@ exports.characterDetail = async (req, res, next) => {
 
 exports.characterCreateGet = async (req, res, next) => {
   try {
+    // Fetch all available visions/weapons/roles to render them as options in the form
     const visions = await Vision.find({})
       .sort({name: 1})
       .exec();
@@ -68,8 +68,10 @@ exports.characterCreateGet = async (req, res, next) => {
     const roles = await Role.find({})
       .sort({name: 1})
       .exec();
+    // Render form
     res.render("characterCreate", {
       title: "Add a Character",
+      character: {name: "", title: "", vision: {}, weapon: {}, role: {}, rating:0, amount:0},
       visions: visions,
       weapons: weapons,
       roles: roles,
@@ -80,3 +82,49 @@ exports.characterCreateGet = async (req, res, next) => {
     return next(err);
   }
 };
+
+exports.characterCreatePost = [
+  // Validate and sanitize fields
+  body("name")
+    .trim()
+    .isLength({min: 1})
+    .escape()
+    .withMessage("Name must be specified")
+    .isAlphanumeric()
+    .withMessage("Name must contain only letters and numbers."),
+  body("title")
+    .trim()
+    .isLength({min: 1})
+    .escape()
+    .withMessage("Title must be specified")
+    .isAlphanumeric()
+    .withMessage("Name must contain only letters and numbers."),
+
+  // Process fields
+  (req, res, next) => {
+    const errors = validationResult(req);
+    
+    // Rerender form if there are errors during validation/sanitization
+    if (!errors.isEmpty()) {
+      res.render("characterCreate", {
+        title: "Add a Character",
+        character: req.body,
+        errors: errors.array(),
+      });
+      return;
+    }
+
+    // Add role to database and render role detail if no errors
+    const character = new Character({
+      name: req.body.name,
+      title: req.body.title,
+      vision: req.body.vision._id,
+    });
+    role.save((err) => {
+      if (err) {
+        return next(err);
+      }
+      res.redirect(role.url);
+    });
+  },
+];

@@ -11,7 +11,7 @@
         <p><%= character.name %></p>
         <p><%= character.title %></p>
         <p>Vision: <%= character.vision.name %></p>
-        <p>Equipped: <%= weapon %></p>
+        <p>Equipped: <%= weapon == null ? "-" : weapon.name %></p>
         <ul class="list-group"> Roles:
           <% character.role.forEach((role) => { %>
             <li class="list-group-item"><%= role.name %></li>

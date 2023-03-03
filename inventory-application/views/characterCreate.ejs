@@ -8,33 +8,35 @@
     <div class="d-flex vh-100">
       <%- include('./partials/nav'); %>
       <main class="container text-center p-4">
-        <form class="d-flex flex-column form-width">
+        <form method='POST' action='' class="d-flex flex-column form-width">
           <div class="mb-3 w-100">
             <label for="name">Character Name:</label>
-            <input type="text" id="name" name="name" required="true" minlength="1" maxlength="25">
+            <input value="<%= character.name %>" type="text" id="name" name="name" required="true" minlength="1" maxlength="25">
           </div>
 
           <div class="mb-3 w-100">
             <label for="name">Character Title:</label>
-            <input type="text" id="title" name="title" required="true" minlength="1" maxlength="50">
+            <input value="<%= character.title %>" type="text" id="title" name="title" required="true" minlength="1" maxlength="50">
           </div>
 
           <div class="mb-3 w-100">
             <label for="vision">Vision:</label>
             <select class="form-select form-select-sm" id="vision" name="vision" required="true">
+              <option selected></option>
             <% visions.forEach((vision) => { %>
                 <% console.log(vision.name) %>
-                <option value="<%= vision.name %>"><%= vision.name %></option>
+                <option value="<%= vision._id %>"><%= vision.name %></option>
             <% }); %>
             </select>
           </div>
 
           <div class="mb-3 w-100">
             <label for="weapon">Weapon:</label>
-            <select class="form-select form-select-sm" id="weapon" name="weapon" required="true">
+            <select class="form-select form-select-sm" id="weapon" name="weapon">
+              <option selected></option>
             <% weapons.forEach((weapon) => { %>
                 <% console.log(weapon.name) %>
-                <option value="<%= weapon.name %>"><%= weapon.name %></option>
+                <option value="<%= weapon._id %>"><%= weapon.name %></option>
             <% }); %>
             </select>
           </div>
@@ -42,23 +44,24 @@
           <div class="mb-3 w-100">
             <label for="role">Role:</label>
             <select class="form-select form-select-sm" id="role" name="role" required="true">
+              <option selected></option>
             <% roles.forEach((role) => { %>
                 <% console.log(role.name) %>
-                <option value="<%= role.name %>"><%= role.name %></option>
+                <option value="<%= role._id %>"><%= role.name %></option>
             <% }); %>
             </select>
           </div>
 
           <div class="mb-3 w-100">
             <label for="rating">Rating: <span id="rating-value">0</span></label>
-            <input value="0" type="range" class="form-range" id="rating" 
+            <input value="<%= character.rating %>" value="0" type="range" class="form-range" id="rating" 
               onInput="document.getElementById('rating-value').textContent = document.getElementById('rating').value" 
               name="rating" required="true" min="0" step="0.1" max="5">
           </div>
 
           <div class="mb-3 w-100">
             <label for="amount">Amount:</label>
-            <input type="number" id="amount" name="amount" required="true" min="1" max="7">
+            <input value="<%= character.amount %>" type="number" id="amount" name="amount" required="true" min="1" max="7">
           </div>
 
           <button type="submit" class="btn btn-primary">Add</button>
