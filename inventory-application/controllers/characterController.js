@@ -120,7 +120,7 @@ exports.characterCreatePost = [
       title: req.body.title,
       vision: req.body.vision._id,
     });
-    role.save((err) => {
+    character.save((err) => {
       if (err) {
         return next(err);
       }

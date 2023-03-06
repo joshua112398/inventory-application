@@ -21,7 +21,7 @@
 
           <div class="mb-3 w-100">
             <label for="vision">Vision:</label>
-            <select class="form-select form-select-sm" id="vision" name="vision" required="true">
+            <select class="form-select form-select-sm" id="vision" name="vision" >
               <option selected></option>
             <% visions.forEach((vision) => { %>
                 <% console.log(vision.name) %>
@@ -43,7 +43,7 @@
 
           <div class="mb-3 w-100">
             <label for="role">Role:</label>
-            <select class="form-select form-select-sm" id="role" name="role" required="true">
+            <select class="form-select form-select-sm" id="role" name="role" >
               <option selected></option>
             <% roles.forEach((role) => { %>
                 <% console.log(role.name) %>
@@ -56,12 +56,12 @@
             <label for="rating">Rating: <span id="rating-value">0</span></label>
             <input value="<%= character.rating %>" value="0" type="range" class="form-range" id="rating" 
               onInput="document.getElementById('rating-value').textContent = document.getElementById('rating').value" 
-              name="rating" required="true" min="0" step="0.1" max="5">
+              name="rating" min="0" step="0.1" max="5">
           </div>
 
           <div class="mb-3 w-100">
             <label for="amount">Amount:</label>
-            <input value="<%= character.amount %>" type="number" id="amount" name="amount" required="true" min="1" max="7">
+            <input value="<%= character.amount %>" type="number" id="amount" name="amount"  min="1" max="7">
           </div>
 
           <button type="submit" class="btn btn-primary">Add</button>

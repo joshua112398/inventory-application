@@ -18,9 +18,7 @@ router.get('/characters/create', characterController.characterCreateGet);
 router.get('/characters/:id', characterController.characterDetail);
 
 /* POST character create page */
-router.post('/characters/create', function (req, res, next) {
-  res.send("Character Create Page: Not Implemented");
-});
+router.post('/characters/create', characterController.characterCreatePost);
 
 /* GET visions page */
 router.get('/visions', visionController.visionList);
