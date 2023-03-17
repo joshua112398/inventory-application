@@ -38,6 +38,9 @@ router.post('/visions/create', visionController.visionCreatePost);
 /* GET vision detail page */
 router.get('/visions/:id', visionController.visionDetail);
 
+/* GET vision delete page */
+router.get('/visions/:id/delete', visionController.visionDeleteGet);
+
 /* GET weapons page */
 router.get('/weapons', weaponController.weaponList);
 

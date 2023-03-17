@@ -1,6 +1,6 @@
 const Vision = require("../models/vision");
+const Character = require("../models/character");
 const { body, validationResult } = require("express-validator");
-const vision = require("../models/vision");
 
 exports.visionList = async (req, res, next) => {
   try {
@@ -81,3 +81,31 @@ exports.visionCreatePost = [
     });
   },
 ];
+
+// Handles rendering of deletion page
+exports.visionDeleteGet = async (req, res, next) => {
+  try {
+    // Fetch the vision corresponding to the id parameter. Throw error if not found
+    const vision = await Vision.findOne({_id: req.params.id}).exec();
+    if (vision == null) {
+      const err = new Error("Vision not found");
+      err.status = 404;
+      return next(err);
+    }
+
+    // Fetch all characters that are assigned the vision that is to be deleted
+    const characters = await Character.find({vision: req.params.id}).sort({name: 1}).exec();
+
+    // Render deletion page, show characters if characters with the vision exist so the user can
+    // be asked to delete or update those characters before deleting the vision
+    console.log(characters);
+    res.render('visionDelete', {
+      title: 'Delete Vision',
+      characters: characters,
+      vision: vision,
+    });
+  }
+  catch (err) {
+    return next(err);
+  }
+};
