@@ -144,9 +144,8 @@ exports.characterCreatePost = [
           .sort({name: 1})
           .exec();
 
-        // Turn the roles field into an array if it's not already one (e.g. when only one role was checked
+        // Turn the roles field into an array if it's not already one (e.g. when only one or no roles are checked)
         req.body.role = [].concat(req.body.role);
-        console.log(req.body);
 
         // Rerender form using previously entered data
         res.render("characterCreate", {
@@ -184,3 +183,39 @@ exports.characterCreatePost = [
     }
   },
 ];
+
+exports.characterDeleteGet = async (req, res, next) => {
+  try {
+    const character = await Character.findOne({_id: req.params.id})
+      .populate("vision")
+      .populate("role")
+      .populate("weapon")
+      .exec();
+    // If no results found
+    if (character == null) {
+      const err = new Error("Character not found");
+      err.status = 404;
+      return next(err);
+    }
+    console.log(character);
+    // If successfully found, then render deletee page
+    res.render("characterDelete", {
+      title: "Delete " + character.name,
+      character: character,
+    });
+  }
+  catch(err) {
+    return next(err);
+  }
+};
+
+exports.characterDeletePost = async (req, res, next) => {
+  try {
+    // Delete the specified character than redirect to character list
+    await Character.deleteOne({_id: req.params.id});
+    res.redirect("/characters");
+  }
+  catch (err) {
+    return next(err);
+  }
+};

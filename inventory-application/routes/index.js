@@ -20,6 +20,12 @@ router.get('/characters/:id', characterController.characterDetail);
 /* POST character create page */
 router.post('/characters/create', characterController.characterCreatePost);
 
+/* GET character delete page */
+router.get('/characters/:id/delete', characterController.characterDeleteGet);
+
+/* POST character delete page */
+router.post('/characters/:id/delete', characterController.characterDeletePost);
+
 /* GET visions page */
 router.get('/visions', visionController.visionList);
 
