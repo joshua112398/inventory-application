@@ -41,6 +41,9 @@ router.get('/visions/:id', visionController.visionDetail);
 /* GET vision delete page */
 router.get('/visions/:id/delete', visionController.visionDeleteGet);
 
+/* POST vision delete page */
+router.post('/visions/:id/delete', visionController.visionDeletePost);
+
 /* GET weapons page */
 router.get('/weapons', weaponController.weaponList);
 
@@ -52,6 +55,12 @@ router.post('/weapons/create', weaponController.weaponCreatePost);
 
 /* GET weapon detail page */
 router.get('/weapons/:id', weaponController.weaponDetail);
+
+/* GET weapon delete page */
+router.get('/weapons/:id/delete', weaponController.weaponDeleteGet);
+
+/* POST weapon delete page */
+router.post('/weapons/:id/delete', weaponController.weaponDeletePost);
 
 /* GET roles page */
 router.get('/roles', roleController.roleList);

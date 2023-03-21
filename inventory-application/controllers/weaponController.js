@@ -1,4 +1,5 @@
 const Weapon = require("../models/weapon");
+const Character = require("../models/character");
 const { body, validationResult } = require("express-validator");
 
 exports.weaponList = async (req, res, next) => {
@@ -57,26 +58,81 @@ exports.weaponCreatePost = [
     .withMessage("Description must be specified"),
   
   // Process form
-  (req, res, next) => {
-    const errors = validationResult(req);
-    // If errors exist, then rerender form with inputted values
-    if (!errors.isEmpty()) {
-      res.render("weaponCreate", {
-        title: "Add New Weapon",
-        weapon: req.body,
-        errors: errors.array(),
-      });
-    }
-    // If no errors, then add weapon to database and render weapon detail page
-    const weapon = new Weapon({
-      name: req.body.name,
-      description: req.body.description,
-    });
-    weapon.save((err) => {
-      if (err) {
-        return next(err);
+  async (req, res, next) => {
+    try {
+      const errors = validationResult(req);
+      // If errors exist, then rerender form with inputted values
+      if (!errors.isEmpty()) {
+        res.render("weaponCreate", {
+          title: "Add New Weapon",
+          weapon: req.body,
+          errors: errors.array(),
+        });
       }
+      // If no errors, then add weapon to database and render weapon detail page
+      const weapon = new Weapon({
+        name: req.body.name,
+        description: req.body.description,
+      });
+      await weapon.save();
       res.redirect(weapon.url);
-    });
+    }
+    catch (err) {
+      return next(err);
+    }
   },
 ];
+
+// Handles rendering of deletion page
+exports.weaponDeleteGet = async (req, res, next) => {
+  try {
+    // Fetch the weapon corresponding to the id parameter. Throw error if not found
+    const weapon = await Weapon.findOne({_id: req.params.id}).exec();
+    if (weapon == null) {
+      const err = new Error("Weapon not found");
+      err.status = 404;
+      return next(err);
+    }
+
+    // Fetch all characters that are assigned the vision that is to be deleted
+    const characters = await Character.find({weapon: req.params.id}).sort({name: 1}).exec();
+
+    // Render deletion page, show characters if characters with the vision exist so the user can
+    // be asked to delete or update those characters before deleting the vision
+    console.log(characters);
+    res.render('weaponDelete', {
+      title: 'Delete Weapon',
+      characters: characters,
+      weapon: weapon,
+    });
+  }
+  catch (err) {
+    return next(err);
+  }
+};
+
+// Handles deletion of weapon and unassignment of said weapon from characters that had it equipped
+exports.weaponDeletePost = async (req, res, next) => {
+  try {
+    const characters = await Character.find({weapon: req.params.id}).exec();
+    characters.forEach((character) => {
+      character.weapon = null;
+    });
+
+    // Make array of save() functions which all return a promise, then await Promise.all on it
+    // so that they are saved concurrently
+    const saveCharacters = characters.map((character) => {
+      return character.save();
+    });
+    await Promise.all(saveCharacters);
+
+    // Delete the weapon
+    await Weapon.deleteOne({_id: req.params.id}).exec();
+
+    // Redirect to weapons list page
+    res.redirect('/weapons');
+  }
+  catch (err) {
+    return next(err);
+  }
+}

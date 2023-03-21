@@ -109,3 +109,17 @@ exports.visionDeleteGet = async (req, res, next) => {
     return next(err);
   }
 };
+
+// Handles deleting vision off database
+exports.visionDeletePost = async (req, res, next) => {
+  try {
+    // Delete the vision
+    await Vision.deleteOne({_id: req.params.id}).exec();
+
+    // Redirect to vision list page
+    res.redirect('/visions');
+  }
+  catch (err) {
+    return next(err);
+  }
+}
