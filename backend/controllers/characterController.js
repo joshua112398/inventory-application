@@ -44,6 +44,7 @@ exports.characterDetail = async (req, res, next) => {
       err.status = 404;
       return next(err);
     }
+    console.log(character);
     // Successfully found, so render. Undefined weapons are dealt with on the front end
     res.render("characterDetail", {
       title: character.name,
