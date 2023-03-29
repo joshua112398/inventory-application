@@ -130,7 +130,7 @@ exports.weaponDeletePost = async (req, res, next) => {
     await Weapon.deleteOne({_id: req.params.id}).exec();
 
     // Redirect to weapons list page
-    res.redirect('/weapons');
+    res.redirect('/server/weapons');
   }
   catch (err) {
     return next(err);

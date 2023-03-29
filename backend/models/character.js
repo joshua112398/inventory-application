@@ -13,7 +13,7 @@ const CharacterSchema = new Schema({
 });
 
 CharacterSchema.virtual('url').get(function() {
-  return `/characters/${this._id}`;
+  return `/server/characters/${this._id}`;
 });
 
 module.exports = mongoose.model("Character", CharacterSchema);

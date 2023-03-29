@@ -214,7 +214,7 @@ exports.characterDeletePost = async (req, res, next) => {
   try {
     // Delete the specified character than redirect to character list
     await Character.deleteOne({_id: req.params.id});
-    res.redirect("/characters");
+    res.redirect("/server/characters");
   }
   catch (err) {
     return next(err);

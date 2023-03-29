@@ -8,7 +8,7 @@ const VisionSchema = new Schema({
 });
 
 VisionSchema.virtual('url').get(function() {
-  return `/visions/${this._id}`;
+  return `/server/visions/${this._id}`;
 });
 
 module.exports = mongoose.model("Vision", VisionSchema);

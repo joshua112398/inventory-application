@@ -8,7 +8,7 @@ const WeaponSchema = new Schema({
 });
 
 WeaponSchema.virtual('url').get(function() {
-  return `/weapons/${this._id}`;
+  return `/server/weapons/${this._id}`;
 });
 
 module.exports = mongoose.model("Weapon", WeaponSchema);

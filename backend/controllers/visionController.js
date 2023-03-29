@@ -117,7 +117,7 @@ exports.visionDeletePost = async (req, res, next) => {
     await Vision.deleteOne({_id: req.params.id}).exec();
 
     // Redirect to vision list page
-    res.redirect('/visions');
+    res.redirect('/server/visions');
   }
   catch (err) {
     return next(err);
