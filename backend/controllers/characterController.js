@@ -6,6 +6,111 @@ const Vision = require("../models/vision");
 const Weapon = require("../models/weapon");
 const { body, validationResult } = require("express-validator");
 
+//////////////////////////
+//// REST API METHODS ////
+//////////////////////////
+
+/* GET characters*/
+exports.getCharacters = async (req, res, next) => {
+  try {
+    const characters = await Character.find({})
+      .populate('vision')
+      .populate('weapon')
+      .populate('role')
+      .sort({name: 1})
+      .exec();
+    
+    return res.status(200).json(characters);
+  }
+  catch(err) {
+    return next(err);
+  }
+};
+
+/* POST to characters */
+exports.createCharacter = [
+  // Validate and sanitize fields
+  body("name")
+    .trim()
+    .isLength({min: 1})
+    .escape()
+    .withMessage("Name must be specified")
+    .isAlphanumeric("en-US", {ignore: " -'"})
+    .withMessage("Name must contain only letters, numbers, or hyphens."),
+  body("title")
+    .trim()
+    .isLength({min: 1})
+    .escape()
+    .withMessage("Title must be specified")
+    .isAlphanumeric("en-US", {ignore: " -'"})
+    .withMessage("Title must contain only letters, numbers, or hyphens."),
+  body("vision")
+    .trim()
+    .isLength({min: 1})
+    .escape()
+    .withMessage("Vision must be specified"),
+  body("role")
+    .exists()
+    .withMessage("At least one role must be specified"),
+  body("weapon")
+    .trim()
+    .escape(),
+  body("rating")
+    .trim()
+    .isLength({min: 1})
+    .escape()
+    .withMessage("Rating must be specified")
+    .isNumeric()
+    .withMessage("Rating must be a number"),
+  body("amount")
+    .trim()
+    .isLength({min: 1})
+    .escape()
+    .withMessage("Amount must be specified")
+    .isNumeric()
+    .withMessage("Amount must be a number"),
+
+  // Process fields
+  async (req, res, next) => {
+    try {
+      const errors = validationResult(req);
+      console.log(errors);
+      
+      // Return validation errors object to the client if errors exist
+      if (!errors.isEmpty()) {
+        return res.status(400).json(errors);
+      }
+
+      // Add character to database if no errors, return the newly created character as json
+      const character = new Character({
+        name: req.body.name,
+        title: req.body.title,
+        vision: req.body.vision,
+        // If no weapon equipped, set value to null
+        weapon: (req.body.weapon === '') ? null : req.body.weapon,
+        role: req.body.role,
+        rating: req.body.rating,
+        amount: req.body.amount,
+      });
+      await character.save();
+      return res.status(200).json(character);
+    }
+    catch(err) {
+      return next(err);
+    }
+  },
+];
+
+/* GET character details */
+router.get('/characters/:id', characterController.getCharacterDetail);
+
+/* DELETE character*/
+router.delete('/characters/:id', characterController.deleteCharacter);
+
+///////////////////////////////////////
+//// SERVER SIDE RENDERING METHODS ////
+///////////////////////////////////////
+
 exports.index = async (req, res, next) => {
   res.render("index", {
     title: "Vision.gg",
@@ -20,7 +125,6 @@ exports.characterList = async (req, res, next) => {
       .populate('weapon')
       .populate('role')
       .exec();
-    console.log(characters);
     res.render("characterList", {
       title: "Characters",
       characterList: characters,
@@ -130,7 +234,7 @@ exports.characterCreatePost = [
   async (req, res, next) => {
     try {
       const errors = validationResult(req);
-      console.log(req.body);
+      console.log(errors);
       
       // Rerender form if there are errors during validation/sanitization
       if (!errors.isEmpty()) {

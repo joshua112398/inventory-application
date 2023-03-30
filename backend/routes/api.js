@@ -5,73 +5,54 @@ const weaponController = require('../controllers/weaponController');
 const roleController = require('../controllers/roleController');
 const router = express.Router();
 
-/* GET home page, which is redirected to the characters page */
-router.get('/', characterController.index);
+/* REST API resources/routes */
 
-/* GET characters page */
-router.get('/characters', characterController.characterList);
+/* GET characters*/
+router.get('/characters', characterController.getCharacters);
 
-/* POST character create */
-router.get('/characters/create', characterController.characterCreateGet);
+/* POST to characters */
+router.post('/characters', characterController.createCharacter);
 
-/* GET character detail page */
-router.get('/characters/:id', characterController.characterDetail);
+/* GET character details */
+router.get('/characters/:id', characterController.getCharacterDetail);
 
-/* POST character create page */
-router.post('/characters/create', characterController.characterCreatePost);
+/* DELETE character*/
+router.delete('/characters/:id', characterController.deleteCharacter);
 
-/* GET character delete page */
-router.get('/characters/:id/delete', characterController.characterDeleteGet);
+/* GET visions*/
+router.get('/visions', visionController.getVisions);
 
-/* POST character delete page */
-router.post('/characters/:id/delete', characterController.characterDeletePost);
+/* POST to visions */
+router.post('/visions', visionController.createVision);
 
-/* GET visions page */
-router.get('/visions', visionController.visionList);
+/* GET vision details */
+router.get('/visions/:id', visionController.getVisionDetail);
 
-/* GET vision create form page */
-router.get('/visions/create', visionController.visionCreateGet);
+/* DELETE vision */
+router.delete('/visions/:id', visionController.deleteVision);
 
-/* POST vision create form page */
-router.post('/visions/create', visionController.visionCreatePost);
+/* GET weapons*/
+router.get('/weapons', visionController.getWeapons);
 
-/* GET vision detail page */
-router.get('/visions/:id', visionController.visionDetail);
+/* POST to weapons */
+router.post('/weapons', visionController.createWeapon);
 
-/* GET vision delete page */
-router.get('/visions/:id/delete', visionController.visionDeleteGet);
+/* GET weapon details */
+router.get('/weapons/:id', visionController.getWeaponDetail);
 
-/* POST vision delete page */
-router.post('/visions/:id/delete', visionController.visionDeletePost);
+/* DELETE weapon */
+router.delete('/weapons/:id', visionController.deleteWeapon);
 
-/* GET weapons page */
-router.get('/weapons', weaponController.weaponList);
+/* GET roles*/
+router.get('/roles', visionController.getRoles);
 
-/* GET weapon create form page */
-router.get('/weapons/create', weaponController.weaponCreateGet);
+/* POST to roles */
+router.post('/roles', visionController.createRole);
 
-/* POST weapon create form page */
-router.post('/weapons/create', weaponController.weaponCreatePost);
+/* GET role details */
+router.get('/roles/:id', visionController.getRoleDetail);
 
-/* GET weapon detail page */
-router.get('/weapons/:id', weaponController.weaponDetail);
-
-/* GET weapon delete page */
-router.get('/weapons/:id/delete', weaponController.weaponDeleteGet);
-
-/* POST weapon delete page */
-router.post('/weapons/:id/delete', weaponController.weaponDeletePost);
-
-/* GET roles page */
-router.get('/roles', roleController.roleList);
-
-/* GET role create form page */
-router.get('/roles/create', roleController.roleCreateGet);
-
-/* POST role create form page */
-router.post('/roles/create', roleController.roleCreatePost);
-
-/* GET role detail page */
-router.get('/roles/:id', roleController.roleDetail);
+/* DELETE role */
+router.delete('/roles/:id', visionController.deleteRole);
 
 module.exports = router;
