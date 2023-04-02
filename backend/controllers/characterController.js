@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const character = require("../models/character");
 const Character = require("../models/character");
 const Role = require("../models/role");
 const Vision = require("../models/vision");
@@ -85,10 +84,10 @@ exports.createCharacter = [
       const character = new Character({
         name: req.body.name,
         title: req.body.title,
-        vision: req.body.vision,
+        vision: mongoose.Types.ObjectId(req.body.vision),
         // If no weapon equipped, set value to null
-        weapon: (req.body.weapon === '') ? null : req.body.weapon,
-        role: req.body.role,
+        weapon: (req.body.weapon === '') ? null : mongoose.Types.ObjectId(req.body.weapon),
+        role: mongoose.Types.ObjectId(req.body.role),
         rating: req.body.rating,
         amount: req.body.amount,
       });
@@ -102,10 +101,46 @@ exports.createCharacter = [
 ];
 
 /* GET character details */
-router.get('/characters/:id', characterController.getCharacterDetail);
+//router.get('/characters/:id', characterController.getCharacterDetail);
+exports.getCharacterDetail = async (req, res, next) => {
+  try {
+    const character = await Character.findOne({_id: req.params.id}).exec();
+    if (character == null) {
+      const error = {
+        error: {
+            value: req.params.id,
+            msg: "Character not found",
+        },
+      };
+      return res.status(404).json(error);
+    }
+    return res.status(200).json(character);
+  }
+  catch(err) {
+    return next(err);
+  }
+};
 
 /* DELETE character*/
-router.delete('/characters/:id', characterController.deleteCharacter);
+//router.delete('/characters/:id', characterController.deleteCharacter);
+exports.deleteCharacter = async (req, res, next) => {
+  try {
+    const deletedCharacter = await Character.deleteOne({_id: req.params.id}).exec();
+    if (deletedCharacter.deletedCount < 1) {
+      const error = {
+        error: {
+          value: req.params.id,
+          msg: "Character to be deleted was not found",
+        },
+      };
+      return res.status(404).json(error);
+    }
+    return res.status(200).json(deletedCharacter);
+  }
+  catch(err) {
+    return next(err);
+  }
+}
 
 ///////////////////////////////////////
 //// SERVER SIDE RENDERING METHODS ////
