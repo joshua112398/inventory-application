@@ -20,39 +20,39 @@ router.get('/characters/:id', characterController.getCharacterDetail);
 router.delete('/characters/:id', characterController.deleteCharacter);
 
 /* GET visions*/
-//router.get('/visions', visionController.getVisions);
+router.get('/visions', visionController.getVisions);
 
 /* POST to visions */
-//router.post('/visions', visionController.createVision);
+router.post('/visions', visionController.createVision);
 
 /* GET vision details */
-//router.get('/visions/:id', visionController.getVisionDetail);
+router.get('/visions/:id', visionController.getVisionDetail);
 
 /* DELETE vision */
-//router.delete('/visions/:id', visionController.deleteVision);
+router.delete('/visions/:id', visionController.deleteVision);
 
 /* GET weapons*/
-//router.get('/weapons', visionController.getWeapons);
+router.get('/weapons', weaponController.getWeapons);
 
 /* POST to weapons */
-//router.post('/weapons', visionController.createWeapon);
+router.post('/weapons', weaponController.createWeapon);
 
 /* GET weapon details */
-//router.get('/weapons/:id', visionController.getWeaponDetail);
+router.get('/weapons/:id', weaponController.getWeaponDetail);
 
 /* DELETE weapon */
-//router.delete('/weapons/:id', visionController.deleteWeapon);
+router.delete('/weapons/:id', weaponController.deleteWeapon);
 
 /* GET roles*/
-//router.get('/roles', visionController.getRoles);
+router.get('/roles', roleController.getRoles);
 
 /* POST to roles */
-//router.post('/roles', visionController.createRole);
+router.post('/roles', roleController.createRole);
 
 /* GET role details */
-//router.get('/roles/:id', visionController.getRoleDetail);
+router.get('/roles/:id', roleController.getRoleDetail);
 
 /* DELETE role */
-//router.delete('/roles/:id', visionController.deleteRole);
+router.delete('/roles/:id', roleController.deleteRole);
 
 module.exports = router; 

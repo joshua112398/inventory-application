@@ -101,7 +101,6 @@ exports.createCharacter = [
 ];
 
 /* GET character details */
-//router.get('/characters/:id', characterController.getCharacterDetail);
 exports.getCharacterDetail = async (req, res, next) => {
   try {
     const character = await Character.findOne({_id: req.params.id}).exec();
@@ -122,11 +121,10 @@ exports.getCharacterDetail = async (req, res, next) => {
 };
 
 /* DELETE character*/
-//router.delete('/characters/:id', characterController.deleteCharacter);
 exports.deleteCharacter = async (req, res, next) => {
   try {
-    const deletedCharacter = await Character.deleteOne({_id: req.params.id}).exec();
-    if (deletedCharacter.deletedCount < 1) {
+    const result = await Character.deleteOne({_id: req.params.id}).exec();
+    if (result.deletedCount < 1) {
       const error = {
         error: {
           value: req.params.id,
@@ -135,7 +133,7 @@ exports.deleteCharacter = async (req, res, next) => {
       };
       return res.status(404).json(error);
     }
-    return res.status(200).json(deletedCharacter);
+    return res.status(200).json(result);
   }
   catch(err) {
     return next(err);

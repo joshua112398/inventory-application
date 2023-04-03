@@ -2,6 +2,104 @@ const Vision = require("../models/vision");
 const Character = require("../models/character");
 const { body, validationResult } = require("express-validator");
 
+/* GET visions*/
+exports.getVisions = async (req, res, next) => {
+  try {
+    const visions = await Vision.find({})
+      .sort({name: 1})
+      .exec();
+    
+    return res.status(200).json(visions);
+  }
+  catch(err) {
+    return next(err);
+  }
+};
+
+/* POST to visions */
+exports.createVision = [
+  // Validate and sanitize fields
+  body("name")
+    .trim()
+    .isLength({min: 1})
+    .escape()
+    .withMessage("Name must be specified")
+    .isAlphanumeric("en-US", {ignore: " -'"})
+    .withMessage("Name must contain only letters, numbers, or hyphens."),
+  body("color")
+    .isLength({min: 1})
+    .escape()
+    .withMessage("Color must be specified"),
+
+  // Process fields
+  async (req, res, next) => {
+    try {
+      const errors = validationResult(req);
+      console.log(errors);
+      
+      // Return validation errors object to the client if errors exist
+      if (!errors.isEmpty()) {
+        return res.status(400).json(errors);
+      }
+
+      // Add character to database if no errors, return the newly created character as json
+      const vision = new Vision({
+        name: req.body.name,
+        color: req.body.color,
+      });
+      await vision.save();
+      return res.status(200).json(vision);
+    }
+    catch(err) {
+      return next(err);
+    }
+  },
+];
+
+/* GET vision details */
+exports.getVisionDetail = async (req, res, next) => {
+  try {
+    const vision = await Vision.findOne({_id: req.params.id}).exec();
+    if (vision == null) {
+      const error = {
+        error: {
+            value: req.params.id,
+            msg: "Vision not found",
+        },
+      };
+      return res.status(404).json(error);
+    }
+    return res.status(200).json(vision);
+  }
+  catch(err) {
+    return next(err);
+  }
+};
+
+/* DELETE vision*/
+exports.deleteVision = async (req, res, next) => {
+  try {
+    const result = await Vision.deleteOne({_id: req.params.id}).exec();
+    if (result.deletedCount < 1) {
+      const error = {
+        error: {
+          value: req.params.id,
+          msg: "Vision to be deleted was not found",
+        },
+      };
+      return res.status(404).json(error);
+    }
+    return res.status(200).json(result);
+  }
+  catch(err) {
+    return next(err);
+  }
+}
+
+///////////////////////////////////////
+//// SERVER SIDE RENDERING METHODS ////
+///////////////////////////////////////
+
 exports.visionList = async (req, res, next) => {
   try {
     const visions = await Vision.find({}).sort({name: 1}).exec();

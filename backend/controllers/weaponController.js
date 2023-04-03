@@ -2,6 +2,109 @@ const Weapon = require("../models/weapon");
 const Character = require("../models/character");
 const { body, validationResult } = require("express-validator");
 
+//////////////////////////
+//// REST API METHODS ////
+//////////////////////////
+
+/* GET weapons*/
+exports.getWeapons = async (req, res, next) => {
+  try {
+    const weapons = await Weapon.find({})
+      .sort({name: 1})
+      .exec();
+    
+    return res.status(200).json(weapons);
+  }
+  catch(err) {
+    return next(err);
+  }
+};
+
+/* POST to weapons */
+exports.createWeapon = [
+  // Validate and sanitize fields
+  body("name")
+    .trim()
+    .isLength({min: 1})
+    .escape()
+    .withMessage("Name must be specified")
+    .isAlphanumeric("en-US", {ignore: " -'"})
+    .withMessage("Name must contain only letters, numbers, or hyphens."),
+  body("description")
+    .trim()
+    .isLength({min: 1})
+    .escape()
+    .withMessage("Description must be specified"),
+
+  // Process fields
+  async (req, res, next) => {
+    try {
+      const errors = validationResult(req);
+      console.log(errors);
+      
+      // Return validation errors object to the client if errors exist
+      if (!errors.isEmpty()) {
+        return res.status(400).json(errors);
+      }
+
+      // Add character to database if no errors, return the newly created character as json
+      const weapon = new Weapon({
+        name: req.body.name,
+        description: req.body.description,
+      });
+      await weapon.save();
+      return res.status(200).json(weapon);
+    }
+    catch(err) {
+      return next(err);
+    }
+  },
+];
+
+/* GET weapon details */
+exports.getWeaponDetail = async (req, res, next) => {
+  try {
+    const weapon = await CharaWeaponcter.findOne({_id: req.params.id}).exec();
+    if (weapon == null) {
+      const error = {
+        error: {
+            value: req.params.id,
+            msg: "Weapon not found",
+        },
+      };
+      return res.status(404).json(error);
+    }
+    return res.status(200).json(weapon);
+  }
+  catch(err) {
+    return next(err);
+  }
+};
+
+/* DELETE weapon*/
+exports.deleteWeapon = async (req, res, next) => {
+  try {
+    const result = await Weapon.deleteOne({_id: req.params.id}).exec();
+    if (result.deletedCount < 1) {
+      const error = {
+        error: {
+          value: req.params.id,
+          msg: "Weapon to be deleted was not found",
+        },
+      };
+      return res.status(404).json(error);
+    }
+    return res.status(200).json(result);
+  }
+  catch(err) {
+    return next(err);
+  }
+}
+
+///////////////////////////////////////
+//// SERVER SIDE RENDERING METHODS ////
+///////////////////////////////////////
+
 exports.weaponList = async (req, res, next) => {
   try {
     const weapons = await Weapon.find({}).sort({name: 1}).exec();
