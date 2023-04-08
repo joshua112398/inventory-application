@@ -7,6 +7,7 @@
         "plugin:react/recommended",
         "plugin:import/recommended",
         "plugin:jsx-a11y/recommended",
+        "plugin:react/jsx-runtime",
         "eslint-config-prettier"
     ],
     "overrides": [
@@ -19,5 +20,13 @@
         "react"
     ],
     "rules": {
+    },
+    "settings": {
+        "import/resolver": {
+            "node": {
+                "paths": ["src"],
+                "extensions": [".js", ".jsx"]
+            }
+        }
     }
 }
