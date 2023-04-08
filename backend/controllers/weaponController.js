@@ -64,7 +64,7 @@ exports.createWeapon = [
 /* GET weapon details */
 exports.getWeaponDetail = async (req, res, next) => {
   try {
-    const weapon = await CharaWeaponcter.findOne({_id: req.params.id}).exec();
+    const weapon = await Weapon.findOne({_id: req.params.id}).exec();
     if (weapon == null) {
       const error = {
         error: {
