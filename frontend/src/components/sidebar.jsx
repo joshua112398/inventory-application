@@ -1,14 +1,14 @@
 import { Link } from 'react-router-dom';
 
-export default function Sidebar() {
+function Sidebar() {
   return (
     <div
       id="sidebar"
       className="bg-sky-950 text-white sm:w-56 sm:h-screen w-full h-16 p-4"
     >
-      <ul id="nav-list" className="flex sm:flex-col flex-row">
+      <ul id="nav-list" className="flex sm:flex-col flex-row gap-2">
         <li className="hover:bg-sky-900 w-full p-4 ">
-          <h1>Vision</h1>
+          <h1>Vision.gg</h1>
         </li>
         <li className="hover:bg-sky-900 w-full p-4">
           <a href="/">Home</a>
@@ -29,3 +29,5 @@ export default function Sidebar() {
     </div>
   );
 }
+
+export default Sidebar;
