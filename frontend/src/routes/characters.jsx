@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import CharacterPanel from '../components/characterpanel';
 import { Link } from 'react-router-dom';
 
 function Characters() {
@@ -12,11 +13,7 @@ function Characters() {
           'http://localhost:3000/api/characters'
         );
         const fetchedCharacters = await fetchedCharactersJson.json();
-        const mappedCharacters = fetchedCharacters.map((character) => (
-          <p key={character._id}>{character.name}</p>
-        ));
-        setCharacters(mappedCharacters);
-        console.log(fetchedCharacters);
+        setCharacters(fetchedCharacters);
       } catch (err) {
         console.log(err);
       }
@@ -24,7 +21,22 @@ function Characters() {
 
     startFetching();
   }, []);
-  return <div>{characters}</div>;
+
+  // Helper function to convert array of characters to panels that can be
+  // rendered by React
+  function convertCharacters(characters) {
+    const converted = characters.map((character) => {
+      return <CharacterPanel key={character._id} character={character} />;
+    });
+
+    return converted;
+  }
+
+  return (
+    <div className="flex flex-wrap gap-5 p-4">
+      {convertCharacters(characters)}
+    </div>
+  );
 }
 
 export default Characters;
