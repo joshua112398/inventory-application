@@ -6,7 +6,7 @@ function Characters() {
   const [characters, setCharacters] = useState([]);
   // Only runs when component mounts
   useEffect(() => {
-    // Fetch characters from database
+    // Fetch characters from database through a Rest API backend
     async function startFetching() {
       try {
         const fetchedCharactersJson = await fetch(
@@ -22,13 +22,12 @@ function Characters() {
     startFetching();
   }, []);
 
-  // Helper function to convert array of characters to panels that can be
-  // rendered by React
+  /* Helper function to convert array of characters to panels that can be
+  rendered by React */
   function convertCharacters(characters) {
     const converted = characters.map((character) => {
       return <CharacterPanel key={character._id} character={character} />;
     });
-
     return converted;
   }
 

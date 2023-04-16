@@ -3,6 +3,7 @@ import { useState } from 'react';
 function Sidebar() {
   const [showMenu, setShowMenu] = useState(false);
 
+  //
   const menuVisibility = function () {
     if (showMenu === false) {
       return 'hidden';
@@ -19,6 +20,7 @@ function Sidebar() {
 
   return (
     <>
+      {/*On small screens, show a banner at the top with a menu button to open the menu*/}
       <div
         id="top-banner"
         className="bg-sky-900 text-white sm:hidden w-full h-24 p-4"
@@ -30,6 +32,10 @@ function Sidebar() {
           Menu
         </button>
       </div>
+
+      {/*The menu/sidebar. On small screens, it will be hidden by default and will only
+      be shown when the user presses the Menu button. The menu also takes up the entire
+      screen on smaller screens instead of being a sidebar.*/}
       <div
         id="sidebar"
         className={
@@ -37,6 +43,7 @@ function Sidebar() {
           menuVisibility()
         }
       >
+        {/* Button for closing the menu on smaller screens only. Does nothing on bigger screens */}
         <button
           id="close-menu-button"
           className={'hover:bg-sky-950 p-4 border-2 ' + menuVisibility()}
