@@ -103,7 +103,11 @@ exports.createCharacter = [
 /* GET character details */
 exports.getCharacterDetail = async (req, res, next) => {
   try {
-    const character = await Character.findOne({_id: req.params.id}).exec();
+    const character = await Character.findOne({_id: req.params.id})
+      .populate('vision')
+      .populate('weapon')
+      .populate('role')
+      .exec();
     if (character == null) {
       const error = {
         error: {

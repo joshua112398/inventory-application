@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 function Sidebar() {
   const [showMenu, setShowMenu] = useState(false);
@@ -54,19 +55,19 @@ function Sidebar() {
             <h1>Vision.gg</h1>
           </li>
           <li className="hover:bg-sky-950 w-full p-4">
-            <a href="/">Home</a>
+            <Link to="/">Home</Link>
           </li>
           <li className="hover:bg-sky-950 w-full p-4">
-            <a href="/characters">Characters</a>
+            <Link to="/characters">Characters</Link>
           </li>
           <li className="hover:bg-sky-950 w-full p-4">
-            <a href="/visions">Visions</a>
+            <Link to="/visions">Visions</Link>
           </li>
           <li className="hover:bg-sky-950 w-full p-4">
-            <a href="/weapons">Weapons</a>
+            <Link to="/weapons">Weapons</Link>
           </li>
           <li className="hover:bg-sky-950 w-full p-4">
-            <a href="/roles">Roles</a>
+            <Link to="/roles">Roles</Link>
           </li>
         </ul>
       </div>

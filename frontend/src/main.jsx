@@ -21,6 +21,7 @@ const router = createBrowserRouter([
       {
         path: 'characters/:id',
         element: <DetailPage type="character" />,
+        errorElement: <ErrorPage />,
       },
     ],
   },
