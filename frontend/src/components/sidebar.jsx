@@ -40,7 +40,7 @@ function Sidebar() {
       <div
         id="sidebar"
         className={
-          'bg-sky-900 text-white sm:w-56 sm:h-screen sm:static sm:block fixed w-full h-full p-4 ' +
+          'flex-shrink-0 bg-sky-900 text-white sm:w-56 sm:h-screen sm:static sm:block fixed w-full h-full p-4 ' +
           menuVisibility()
         }
       >
