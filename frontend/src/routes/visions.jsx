@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import VisionPanel from '../components/weaponpanel';
+import VisionPanel from '../components/visionpanel';
 import { Link } from 'react-router-dom';
 
 function Visions() {
@@ -26,7 +26,7 @@ function Visions() {
   rendered by React */
   function convertVisions(visions) {
     const converted = visions.map((vision) => {
-      return <VisionPanel key={vision._id} weapon={vision} />;
+      return <VisionPanel key={vision._id} vision={vision} />;
     });
     return converted;
   }

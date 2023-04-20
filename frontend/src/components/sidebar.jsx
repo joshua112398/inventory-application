@@ -47,7 +47,9 @@ function Sidebar() {
         {/* Button for closing the menu on smaller screens only. Does nothing on bigger screens */}
         <button
           id="close-menu-button"
-          className={'hover:bg-sky-950 p-4 border-2 ' + menuVisibility()}
+          className={
+            'sm:hidden hover:bg-sky-950 p-4 border-2 ' + menuVisibility()
+          }
           onClick={toggleMenuVisibility}
         />
         <ul id="nav-list" className="flex flex-wrap sm:flex-col flex-row gap-2">
@@ -58,16 +60,24 @@ function Sidebar() {
             <Link to="/">Home</Link>
           </li>
           <li className="hover:bg-sky-950 w-full p-4">
-            <Link to="/characters">Characters</Link>
+            <Link to="/characters" onClick={toggleMenuVisibility}>
+              Characters
+            </Link>
           </li>
           <li className="hover:bg-sky-950 w-full p-4">
-            <Link to="/visions">Visions</Link>
+            <Link to="/visions" onClick={toggleMenuVisibility}>
+              Visions
+            </Link>
           </li>
           <li className="hover:bg-sky-950 w-full p-4">
-            <Link to="/weapons">Weapons</Link>
+            <Link to="/weapons" onClick={toggleMenuVisibility}>
+              Weapons
+            </Link>
           </li>
           <li className="hover:bg-sky-950 w-full p-4">
-            <Link to="/roles">Roles</Link>
+            <Link to="/roles" onClick={toggleMenuVisibility}>
+              Roles
+            </Link>
           </li>
         </ul>
       </div>

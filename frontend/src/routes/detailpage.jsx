@@ -46,6 +46,14 @@ function DetailPage({ group }) {
         <p>{detail.name}</p>
       </div>
     );
+  } else if (group === 'roles') {
+    return (
+      <div className="flex flex-wrap gap-5 p-4 text-white">
+        <p>{detail.name}</p>
+      </div>
+    );
+  } else {
+    return null;
   }
 }
 

@@ -5,6 +5,7 @@ import Root from './routes/root';
 import Characters from './routes/characters';
 import Weapons from './routes/weapons';
 import Visions from './routes/visions';
+import Roles from './routes/roles';
 import DetailPage from './routes/detailpage';
 import ErrorPage from './error-page';
 import './styles/index.css';
@@ -38,6 +39,21 @@ const router = createBrowserRouter([
       {
         path: 'visions',
         element: <Visions />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: 'visions/:id',
+        element: <DetailPage group="visions" />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: 'roles',
+        element: <Roles />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: 'roles/:id',
+        element: <DetailPage group="roles" />,
         errorElement: <ErrorPage />,
       },
     ],
