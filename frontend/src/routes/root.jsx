@@ -3,9 +3,9 @@ import Sidebar from '../components/sidebar';
 
 export default function Root() {
   return (
-    <div className="h-screen flex flex-col sm:flex-row">
+    <div className="min-h-full flex flex-col sm:flex-row relative">
       <Sidebar />
-      <div id="detail" className="bg-sky-950 flex-auto">
+      <div id="detail" className="bg-sky-950 flex-auto relative">
         <Outlet />
       </div>
     </div>
