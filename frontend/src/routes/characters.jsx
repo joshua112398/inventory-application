@@ -34,6 +34,10 @@ function Characters() {
   return (
     <div className="flex flex-wrap gap-5 p-4">
       {convertCharacters(characters)}
+      {convertCharacters(characters)}
+      {convertCharacters(characters)}
+      {convertCharacters(characters)}
+      {convertCharacters(characters)}
     </div>
   );
 }

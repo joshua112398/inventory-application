@@ -6,10 +6,12 @@ import { Link } from 'react-router-dom';
 function Visions() {
   const [visions, setVisions] = useState([]);
   const [formVisibility, setFormVisibility] = useState(false);
+  const [lastResponse, setLastResponse] = useState('');
 
   // Only runs when component mounts
   useEffect(() => {
     // Fetch characters from database through a Rest API backend
+    console.log('Rendering');
     async function startFetching() {
       try {
         const fetchedVisionsJson = await fetch(
@@ -23,7 +25,7 @@ function Visions() {
     }
 
     startFetching();
-  }, []);
+  }, [lastResponse]);
 
   /* Helper function to convert array of characters to panels that can be
   rendered by React */
@@ -32,6 +34,11 @@ function Visions() {
       return <VisionPanel key={vision._id} vision={vision} />;
     });
     return converted;
+  }
+
+  // State handler to get last response from Form component
+  function postLastResponse(response) {
+    setLastResponse(response);
   }
 
   function toggleForm() {
@@ -51,7 +58,12 @@ function Visions() {
         </button>
         {convertVisions(visions)}
       </div>
-      <Form group="visions" isVisible={formVisibility} />
+      <Form
+        group="visions"
+        isVisible={formVisibility}
+        postLastResponse={postLastResponse}
+        toggleForm={toggleForm}
+      />
     </>
   );
 }
