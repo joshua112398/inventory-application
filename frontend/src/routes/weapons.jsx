@@ -1,9 +1,13 @@
 import { useEffect, useState } from 'react';
 import WeaponPanel from '../components/weaponpanel';
+import Form from '../components/form';
 import { Link } from 'react-router-dom';
 
 function Weapons() {
   const [weapons, setWeapons] = useState([]);
+  const [formVisibility, setFormVisibility] = useState(false);
+  const [lastResponse, setLastResponse] = useState('');
+
   // Only runs when component mounts
   useEffect(() => {
     // Fetch characters from database through a Rest API backend
@@ -31,8 +35,35 @@ function Weapons() {
     return converted;
   }
 
+  // State handler to get last response from Form component
+  function postLastResponse(response) {
+    setLastResponse(response);
+  }
+
+  function toggleForm() {
+    setFormVisibility((formVisibility) => {
+      return !formVisibility;
+    });
+  }
+
   return (
-    <div className="flex flex-wrap gap-5 p-4">{convertWeapons(weapons)}</div>
+    <>
+      <div className="flex flex-wrap gap-5 p-4">
+        <button
+          className="w-32 h-48 flex flex-col gap-2 text-white bg-sky-900 p-4 rounded-md"
+          onClick={toggleForm}
+        >
+          +
+        </button>
+        {convertWeapons(weapons)}
+      </div>
+      <Form
+        group="weapons"
+        isVisible={formVisibility}
+        postLastResponse={postLastResponse}
+        toggleForm={toggleForm}
+      />
+    </>
   );
 }
 
