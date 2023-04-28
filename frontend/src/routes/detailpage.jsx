@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import DeletePopup from '../components/deletepopup';
 
 function DetailPage({ group }) {
   // Get the id from the URL
   let { id } = useParams();
   const [detail, setDetail] = useState('');
+  const [showDeletePopup, setShowDeletePopup] = useState(false);
 
   // Fetch data based on id and collection indicated by the group prop
   useEffect(() => {
@@ -58,10 +60,22 @@ function DetailPage({ group }) {
     }
   }
 
+  function toggleDeletePopup() {
+    setShowDeletePopup((showDeletePopup) => !showDeletePopup);
+  }
+
   return (
     <>
       {renderDetail(group)}
-      <button className="text-rose-600 p-4">Delete</button>
+      <button className="text-rose-600 p-4" onClick={toggleDeletePopup}>
+        Delete
+      </button>
+      <DeletePopup
+        visible={showDeletePopup}
+        group={group}
+        name="detail.name"
+        id={id}
+      />
     </>
   );
 }
