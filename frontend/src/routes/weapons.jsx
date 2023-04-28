@@ -24,7 +24,7 @@ function Weapons() {
     }
 
     startFetching();
-  }, []);
+  }, [lastResponse]);
 
   /* Helper function to convert array of characters to panels that can be
   rendered by React */

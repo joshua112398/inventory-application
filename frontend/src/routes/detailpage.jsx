@@ -21,40 +21,49 @@ function DetailPage({ group }) {
 
   /* If detail state is empty, render null. Otherwise render details.
   Different renders based on what group the requested detail is in */
-  if (detail === '') {
-    return null;
-  } else if (group === 'characters') {
-    return (
-      <div className="flex flex-wrap gap-5 p-4 text-white">
-        <p>{detail.name}</p>
-        <p>{detail.title}</p>
-        <p>{detail.vision.name}</p>
-        <p>{detail.rating}</p>
-        <p>{detail.amount}</p>
-      </div>
-    );
-  } else if (group === 'weapons') {
-    return (
-      <div className="flex flex-wrap gap-5 p-4 text-white">
-        <p>{detail.name}</p>
-        <p>{detail.description}</p>
-      </div>
-    );
-  } else if (group === 'visions') {
-    return (
-      <div className="flex flex-wrap gap-5 p-4 text-white">
-        <p>{detail.name}</p>
-      </div>
-    );
-  } else if (group === 'roles') {
-    return (
-      <div className="flex flex-wrap gap-5 p-4 text-white">
-        <p>{detail.name}</p>
-      </div>
-    );
-  } else {
-    return null;
+  function renderDetail(group) {
+    if (detail === '') {
+      return null;
+    } else if (group === 'characters') {
+      return (
+        <div className="flex flex-wrap gap-5 p-4 text-white">
+          <p>{detail.name}</p>
+          <p>{detail.title}</p>
+          <p>{detail.vision.name}</p>
+          <p>{detail.rating}</p>
+          <p>{detail.amount}</p>
+        </div>
+      );
+    } else if (group === 'weapons') {
+      return (
+        <div className="flex flex-wrap gap-5 p-4 text-white">
+          <p>{detail.name}</p>
+          <p>{detail.description}</p>
+        </div>
+      );
+    } else if (group === 'visions') {
+      return (
+        <div className="flex flex-wrap gap-5 p-4 text-white">
+          <p>{detail.name}</p>
+        </div>
+      );
+    } else if (group === 'roles') {
+      return (
+        <div className="flex flex-wrap gap-5 p-4 text-white">
+          <p>{detail.name}</p>
+        </div>
+      );
+    } else {
+      return null;
+    }
   }
+
+  return (
+    <>
+      {renderDetail(group)}
+      <button className="text-rose-600 p-4">Delete</button>
+    </>
+  );
 }
 
 export default DetailPage;

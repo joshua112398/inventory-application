@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 function Form({ group, isVisible, toggleForm, postLastResponse }) {
@@ -23,6 +23,36 @@ function Form({ group, isVisible, toggleForm, postLastResponse }) {
     name: '',
     description: '',
   });
+  const [postErrors, setPostErrors] = useState([]);
+  const [visions, setVisions] = useState([]);
+  const [roles, setRoles] = useState([]);
+  const [weapons, setWeapons] = useState([]);
+
+  useEffect(() => {
+    // Fetch current list of weapons, roles, and visions to populate the character creation
+    // form with them
+    async function startFetching() {
+      try {
+        const fetchedWeaponsJson = await fetch(
+          'http://localhost:3000/api/weapons'
+        );
+        const fetchedRolesJson = await fetch('http://localhost:3000/api/roles');
+        const fetchedVisionsJson = await fetch(
+          'http://localhost:3000/api/visions'
+        );
+        const fetchedWeapons = await fetchedWeaponsJson.json();
+        const fetchedRoles = await fetchedRolesJson.json();
+        const fetchedVisions = await fetchedVisionsJson.json();
+        setRoles(fetchedRoles);
+        setWeapons(fetchedWeapons);
+        setVisions(fetchedVisions);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+
+    startFetching();
+  }, []);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -39,9 +69,201 @@ function Form({ group, isVisible, toggleForm, postLastResponse }) {
       },
       body: formDataJson,
     });
+    const responseConverted = await response.json();
 
-    postLastResponse(response);
-    toggleForm();
+    // If POST was successful without errors, hide the form. Else, save the errors so it can
+    // be displayed on the form to let the user know what to fix.
+    if (response.ok === true) {
+      toggleForm();
+      setPostErrors([]);
+      postLastResponse(responseConverted);
+    } else {
+      setPostErrors(responseConverted.errors);
+    }
+  }
+
+  function showPostErrors() {
+    if (postErrors.length) {
+      let key = 0;
+      return postErrors.map((error) => {
+        key += 1;
+        return <p key={key}>{error.msg}</p>;
+      });
+    } else {
+      return null;
+    }
+  }
+
+  function characterForm() {
+    // Map the fetched items into <option> elements to be displayed in a <select> form
+    const weaponComponents = weapons.map((weapon) => {
+      return (
+        <option key={weapon._id} value={weapon._id}>
+          {weapon.name}
+        </option>
+      );
+    });
+    const roleComponents = roles.map((role) => {
+      return (
+        <option key={role._id} value={role._id}>
+          {role.name}
+        </option>
+      );
+    });
+    const visionComponents = visions.map((vision) => {
+      return (
+        <option key={vision._id} value={vision._id}>
+          {vision.name}
+        </option>
+      );
+    });
+
+    console.log(visionComponents);
+
+    return (
+      <div className="relative w-4/5 max-w-lg max-h-full bg-sky-900 text-white p-8 rounded-md overflow-auto">
+        <button onClick={toggleForm} className="absolute right-4 top-2">
+          X
+        </button>
+        <form
+          method="post"
+          action="http://localhost:3000/api/characters"
+          onSubmit={handleSubmit}
+          className="flex flex-col gap-4"
+        >
+          <div className="flex flex-col gap-1">
+            <label htmlFor="name" className="block">
+              Name:
+            </label>
+            <input
+              value={characterData.name}
+              onChange={(e) => {
+                setCharacterData((characterData) => {
+                  return { ...characterData, name: e.target.value };
+                });
+              }}
+              id="name"
+              name="name"
+              className="text-black"
+            />
+          </div>
+          <div className="flex gap-4">
+            <label htmlFor="title" className="block">
+              Title:
+            </label>
+            <input
+              value={characterData.title}
+              onChange={(e) => {
+                setCharacterData((characterData) => {
+                  return { ...characterData, title: e.target.value };
+                });
+              }}
+              id="title"
+              name="title"
+              className="text-black"
+            />
+          </div>
+          <div className="flex gap-4">
+            <label htmlFor="vision" className="block">
+              Vision:
+            </label>
+            <select
+              className="text-black"
+              id="vision"
+              name="vision"
+              value={characterData.vision}
+              onChange={(e) => {
+                setCharacterData({
+                  ...characterData,
+                  vision: e.target.value,
+                });
+              }}
+            >
+              {visionComponents}
+            </select>
+          </div>
+          <div className="flex gap-4">
+            <label htmlFor="weapon" className="block">
+              Weapon:
+            </label>
+            <select
+              className="text-black"
+              id="weapon"
+              name="weapon"
+              value={characterData.weapon}
+              onChange={(e) => {
+                setCharacterData({
+                  ...characterData,
+                  weapon: e.target.value,
+                });
+              }}
+            >
+              {weaponComponents}
+            </select>
+          </div>
+          <div className="flex gap-4">
+            <label htmlFor="role" className="block">
+              Role:
+            </label>
+            <select
+              className="text-black"
+              id="role"
+              name="role"
+              onChange={(e) => {
+                setCharacterData({
+                  ...characterData,
+                  role: e.target.value,
+                });
+              }}
+            >
+              {roleComponents}
+            </select>
+          </div>
+          <div className="flex gap-4">
+            <label htmlFor="rating" className="block">
+              Rating:
+            </label>
+            <input
+              type="range"
+              id="rating"
+              name="rating"
+              min="0"
+              max="5"
+              step="0.1"
+              value={characterData.rating}
+              onChange={(e) => {
+                setCharacterData((characterData) => {
+                  return { ...characterData, rating: e.target.value };
+                });
+              }}
+            />
+            <span>{characterData.rating}</span>
+          </div>
+          <div className="flex gap-4">
+            <label htmlFor="amount" className="block">
+              Amount:
+            </label>
+            <input
+              type="number"
+              id="amount"
+              name="amount"
+              min="1"
+              max="7"
+              step="1"
+              className="text-black text-center"
+              value={characterData.amount}
+              onChange={(e) => {
+                setCharacterData((characterData) => {
+                  return { ...characterData, amount: e.target.value };
+                });
+              }}
+            />
+          </div>
+          <button type="submit">Submit</button>
+          {showPostErrors()}
+        </form>
+      </div>
+    );
   }
 
   function visionForm() {
@@ -63,7 +285,9 @@ function Form({ group, isVisible, toggleForm, postLastResponse }) {
             <input
               value={visionData.name}
               onChange={(e) => {
-                setVisionData({ ...visionData, name: e.target.value });
+                setVisionData((visionData) => {
+                  return { ...visionData, name: e.target.value };
+                });
               }}
               id="name"
               name="name"
@@ -77,7 +301,9 @@ function Form({ group, isVisible, toggleForm, postLastResponse }) {
             <input
               value={visionData.color}
               onChange={(e) => {
-                setVisionData({ ...visionData, color: e.target.value });
+                setVisionData((visionData) => {
+                  return { ...visionData, color: e.target.value };
+                });
               }}
               id="color"
               type="color"
@@ -85,6 +311,7 @@ function Form({ group, isVisible, toggleForm, postLastResponse }) {
             />
           </div>
           <button type="submit">Submit</button>
+          {showPostErrors()}
         </form>
       </div>
     );
@@ -109,7 +336,9 @@ function Form({ group, isVisible, toggleForm, postLastResponse }) {
             <input
               value={weaponData.name}
               onChange={(e) => {
-                setWeaponData({ ...weaponData, name: e.target.value });
+                setWeaponData((weaponData) => {
+                  return { ...weaponData, name: e.target.value };
+                });
               }}
               id="name"
               name="name"
@@ -123,7 +352,9 @@ function Form({ group, isVisible, toggleForm, postLastResponse }) {
             <input
               value={weaponData.description}
               onChange={(e) => {
-                setWeaponData({ ...weaponData, description: e.target.value });
+                setWeaponData((weaponData) => {
+                  return { ...weaponData, description: e.target.value };
+                });
               }}
               id="description"
               name="description"
@@ -131,6 +362,7 @@ function Form({ group, isVisible, toggleForm, postLastResponse }) {
             />
           </div>
           <button type="submit">Submit</button>
+          {showPostErrors()}
         </form>
       </div>
     );
@@ -155,7 +387,9 @@ function Form({ group, isVisible, toggleForm, postLastResponse }) {
             <input
               value={roleData.name}
               onChange={(e) => {
-                setRoleData({ ...roleData, name: e.target.value });
+                setRoleData((roleData) => {
+                  return { ...roleData, name: e.target.value };
+                });
               }}
               id="name"
               name="name"
@@ -169,7 +403,9 @@ function Form({ group, isVisible, toggleForm, postLastResponse }) {
             <input
               value={roleData.description}
               onChange={(e) => {
-                setRoleData({ ...roleData, description: e.target.value });
+                setRoleData((roleData) => {
+                  return { ...roleData, description: e.target.value };
+                });
               }}
               id="description"
               name="description"
@@ -177,6 +413,7 @@ function Form({ group, isVisible, toggleForm, postLastResponse }) {
             />
           </div>
           <button type="submit">Submit</button>
+          {showPostErrors()}
         </form>
       </div>
     );
