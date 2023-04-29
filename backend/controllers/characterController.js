@@ -12,7 +12,21 @@ const { body, validationResult } = require("express-validator");
 /* GET characters*/
 exports.getCharacters = async (req, res, next) => {
   try {
-    const characters = await Character.find({})
+    const filters = {
+      weapon: req.query.weapon,
+      vision: req.query.vision,
+      role: req.query.role,
+    }
+
+    for (const filter in filters) {
+      if (filters[filter] == undefined) {
+        delete filters[filter];
+      }
+    }
+
+    console.log(filters);
+
+    const characters = await Character.find({...filters})
       .populate('vision')
       .populate('weapon')
       .populate('role')
