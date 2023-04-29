@@ -6,6 +6,7 @@ function DetailPage({ group }) {
   // Get the id from the URL
   let { id } = useParams();
   const [detail, setDetail] = useState('');
+  const [currentGroup, setCurrentGroup] = useState(group);
   const [showDeletePopup, setShowDeletePopup] = useState(false);
 
   // Fetch data based on id and collection indicated by the group prop
@@ -16,17 +17,17 @@ function DetailPage({ group }) {
       );
       const jsonDetail = await fetchedDetail.json();
       setDetail(jsonDetail);
+      setCurrentGroup(group);
     }
-
     startFetching();
-  }, []);
+  }, [group, id]);
 
   /* If detail state is empty, render null. Otherwise render details.
   Different renders based on what group the requested detail is in */
-  function renderDetail(group) {
+  function renderDetail(currentGroup) {
     if (detail === '') {
       return null;
-    } else if (group === 'characters') {
+    } else if (currentGroup === 'characters') {
       return (
         <div className="flex flex-wrap gap-5 p-4 text-white">
           <p>{detail.name}</p>
@@ -36,20 +37,20 @@ function DetailPage({ group }) {
           <p>{detail.amount}</p>
         </div>
       );
-    } else if (group === 'weapons') {
+    } else if (currentGroup === 'weapons') {
       return (
         <div className="flex flex-wrap gap-5 p-4 text-white">
           <p>{detail.name}</p>
           <p>{detail.description}</p>
         </div>
       );
-    } else if (group === 'visions') {
+    } else if (currentGroup === 'visions') {
       return (
         <div className="flex flex-wrap gap-5 p-4 text-white">
           <p>{detail.name}</p>
         </div>
       );
-    } else if (group === 'roles') {
+    } else if (currentGroup === 'roles') {
       return (
         <div className="flex flex-wrap gap-5 p-4 text-white">
           <p>{detail.name}</p>
@@ -66,14 +67,15 @@ function DetailPage({ group }) {
 
   return (
     <>
-      {renderDetail(group)}
+      {renderDetail(currentGroup)}
       <button className="text-rose-600 p-4" onClick={toggleDeletePopup}>
         Delete
       </button>
       <DeletePopup
         visible={showDeletePopup}
+        toggleVisibility={toggleDeletePopup}
         group={group}
-        name="detail.name"
+        name={detail.name}
         id={id}
       />
     </>

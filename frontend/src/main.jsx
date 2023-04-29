@@ -23,6 +23,10 @@ const router = createBrowserRouter([
       },
       {
         path: 'characters/:id',
+        // Since we're reusing the DetailPage component for all detail pages, I decided
+        // to pass a unique key prop to force a remount, since state was not being reset back
+        // to empty state, which is critical to avoid rendering of undefined items which would
+        // throw errors.
         element: <DetailPage group="characters" />,
         errorElement: <ErrorPage />,
       },
