@@ -3,6 +3,8 @@ const Character = require("../models/character");
 const Role = require("../models/role");
 const Vision = require("../models/vision");
 const Weapon = require("../models/weapon");
+const fs = require("fs");
+const path = require("path");
 const { body, validationResult } = require("express-validator");
 
 //////////////////////////
@@ -95,6 +97,8 @@ exports.createCharacter = [
       }
 
       // Add character to database if no errors, return the newly created character as json
+      console.log("hey");
+      console.log(req.files);
       const character = new Character({
         name: req.body.name,
         title: req.body.title,
@@ -104,6 +108,14 @@ exports.createCharacter = [
         role: mongoose.Types.ObjectId(req.body.role),
         rating: req.body.rating,
         amount: req.body.amount,
+        thumbnail: {
+          data: fs.readFileSync(path.join(__dirname + '/../uploads/' + req.files['thumbnail'][0].filename)),
+          contentType: 'image/png'
+        },
+        img: {
+          data: fs.readFileSync(path.join(__dirname + '/../uploads/' + req.files['img'][0].filename)),
+          contentType: 'image/png'
+        }
       });
       await character.save();
       return res.status(200).json(character);

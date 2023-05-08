@@ -10,6 +10,14 @@ const CharacterSchema = new Schema({
   role: [{ type: Schema.Types.ObjectId, ref: "Role", required: true }],
   rating: { type: Number, required: true },
   amount: { type: Number, required: true },
+  thumbnail: {
+    data: Buffer,
+    contentType: String
+  },
+  img: {
+    data: Buffer,
+    contentType: String
+  }
 });
 
 CharacterSchema.virtual('url').get(function() {

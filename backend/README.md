@@ -12,6 +12,8 @@ I was unaware that find() in mongoose returns a pointer (cursor), and so accessi
 
 I find myself having to look up syntax a lot in this project for Bootstrap, EJS, Express.js/Node.js, and Mongoose/MongoDB. I haven't used any of these extensively before in any previous projects so I don't have a lot of the syntax memorized yet. 
 
+I was unsure what the best way was of storing images uploaded from the application client. I could either store it as binary data directly in the database, or store it on a disk somewhere and only upload the absolute path of the image to the database. The third simpler option was to simply ask users to paste a link to an image online instead of uploading one. I went with the database option since my project's scale isn't big enough to worry about performance and database size.
+
 # Frontend Roadblocks
 
 Using the <Link> component to go to another route that reuses the same component <A> will not remount the
