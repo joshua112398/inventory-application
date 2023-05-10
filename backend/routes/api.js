@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require('express');
 const characterController = require('../controllers/characterController');
 const visionController = require('../controllers/visionController');
@@ -12,15 +13,15 @@ const { S3Client } = require("@aws-sdk/client-s3");
 
 const s3 = new S3Client({
   credentials: {
-    accessKeyId: "AKIAQGEHGBB6SAVU2WCP",
-    secretAccessKey: "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",
+    accessKeyId: process.env.AWS_ACCESS_KEY,
+    secretAccessKey: process.env.AWS_SECRET_KEY,
   },
-  region: "us-west-1",
+  region: process.env.AWS_BUCKET_REGION,
 });
 
 const s3Storage = multerS3({
   s3: s3,
-  bucket: "inventory-application",
+  bucket: process.env.AWS_BUCKET_NAME,
   metadata: (req, file, cb) => {
     cb(null, {fieldname: file.fieldname})
   },
@@ -33,7 +34,7 @@ const s3Storage = multerS3({
 const uploadImage = multer({
   storage: s3Storage,
   limits: {
-    fileSize: 1024 * 1024 * 4 // 2mb file size
+    fileSize: 1024 * 1024 * 4 // 4mb file size
   }
 })
 
