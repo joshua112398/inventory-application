@@ -96,6 +96,8 @@ exports.createCharacter = [
         return res.status(400).json(errors);
       }
 
+      console.log(req.files);
+
       // Add character to database if no errors, return the newly created character as json
       console.log("hey");
       console.log(req.files);
@@ -108,14 +110,8 @@ exports.createCharacter = [
         role: mongoose.Types.ObjectId(req.body.role),
         rating: req.body.rating,
         amount: req.body.amount,
-        thumbnail: {
-          data: fs.readFileSync(path.join(__dirname + '/../uploads/' + req.files['thumbnail'][0].filename)),
-          contentType: 'image/png'
-        },
-        img: {
-          data: fs.readFileSync(path.join(__dirname + '/../uploads/' + req.files['img'][0].filename)),
-          contentType: 'image/png'
-        }
+        thumbnail: req.files.thumbnail[0].location,
+        img: req.files.img[0].location,
       });
       await character.save();
       return res.status(200).json(character);

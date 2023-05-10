@@ -6,16 +6,36 @@ const roleController = require('../controllers/roleController');
 const path = require('path');
 const router = express.Router();
 // Set up multer for parsing MultiPart forms
-var multer = require("multer");
-var storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-      cb(null, path.join(__dirname + '/../uploads/'))
+const multer = require("multer");
+const multerS3 = require("multer-s3");
+const { S3Client } = require("@aws-sdk/client-s3");
+
+const s3 = new S3Client({
+  credentials: {
+    accessKeyId: "AKIAQGEHGBB6SAVU2WCP",
+    secretAccessKey: "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",
   },
-  filename: (req, file, cb) => {
-      cb(null, file.fieldname + '-' + Date.now())
+  region: "us-west-1",
+});
+
+const s3Storage = multerS3({
+  s3: s3,
+  bucket: "inventory-application",
+  metadata: (req, file, cb) => {
+    cb(null, {fieldname: file.fieldname})
+  },
+  key: (req, file, cb) => {
+    const fileName = Date.now() + "_" + file.fieldname;
+    cb(null, fileName);
   }
 });
-const upload = multer({ storage: storage });
+
+const uploadImage = multer({
+  storage: s3Storage,
+  limits: {
+    fileSize: 1024 * 1024 * 4 // 2mb file size
+  }
+})
 
 /* REST API resources/routes */
 
@@ -27,7 +47,7 @@ const fields = [
   { name: 'img'},
   { name: 'thumbnail'}
 ];
-router.post('/characters', upload.fields(fields), characterController.createCharacter);
+router.post('/characters', uploadImage.fields(fields), characterController.createCharacter);
 
 /* GET character details */
 router.get('/characters/:id', characterController.getCharacterDetail);

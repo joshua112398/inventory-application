@@ -13,21 +13,22 @@ function CharacterPanel({ character }) {
     if (!character.thumbnail) {
       return null;
     } else {
-      const src = `data:${character.thumbnail.contentType};base64, ${toBase64(
-        character.thumbnail.data.data
-      )}`;
-      return <img src={src} />;
+      return (
+        <img
+          style={{ backgroundColor: `${character.vision.color}` }}
+          src={character.thumbnail}
+        />
+      );
     }
   }
 
   return (
     <Link
       to={'/characters/' + character._id}
-      className="w-32 h-48 flex flex-col gap-2 text-white bg-sky-900 p-4 rounded-md"
+      className="w-28 h-40 flex flex-col justify-stretch overflow-hidden text-white bg-sky-900 rounded-md"
     >
       {renderThumbnail(character)}
-      <p>{character.name}</p>
-      <p>{character.vision.name}</p>
+      <p className="m-auto">{character.name}</p>
     </Link>
   );
 }

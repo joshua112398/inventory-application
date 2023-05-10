@@ -10,6 +10,8 @@ function Form({ group, isVisible, toggleForm, postLastResponse }) {
     role: [],
     rating: 0,
     amount: 1,
+    thumbnail: null,
+    img: null,
   });
   const [visionData, setVisionData] = useState({
     name: '',
@@ -55,30 +57,33 @@ function Form({ group, isVisible, toggleForm, postLastResponse }) {
   }, []);
 
   async function handleSubmit(e) {
-    e.preventDefault();
-    const form = e.target;
-    const formData = new FormData(form);
-    const objectFormData = Object.fromEntries(formData.entries());
-    const formDataJson = JSON.stringify(objectFormData);
-    const url = form.action;
+    try {
+      e.preventDefault();
+      const form = e.target;
+      const formData = new FormData(form);
+      formData.append('thumbnail', characterData.thumbnail);
+      formData.append('img', characterData.img);
+      console.log(characterData);
+      console.log(formData);
+      const url = form.action;
 
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: formDataJson,
-    });
-    const responseConverted = await response.json();
+      const response = await fetch(url, {
+        method: 'POST',
+        body: formData,
+      });
+      const responseConverted = await response.json();
 
-    // If POST was successful without errors, hide the form. Else, save the errors so it can
-    // be displayed on the form to let the user know what to fix.
-    if (response.ok === true) {
-      toggleForm();
-      setPostErrors([]);
-      postLastResponse(responseConverted);
-    } else {
-      setPostErrors(responseConverted.errors);
+      // If POST was successful without errors, hide the form. Else, save the errors so it can
+      // be displayed on the form to let the user know what to fix.
+      if (response.ok === true) {
+        toggleForm();
+        setPostErrors([]);
+        postLastResponse(responseConverted);
+      } else {
+        setPostErrors(responseConverted.errors);
+      }
+    } catch (err) {
+      console.log(err);
     }
   }
 
@@ -255,6 +260,38 @@ function Form({ group, isVisible, toggleForm, postLastResponse }) {
               onChange={(e) => {
                 setCharacterData((characterData) => {
                   return { ...characterData, amount: e.target.value };
+                });
+              }}
+            />
+          </div>
+          <div className="flex gap-4">
+            <label htmlFor="thumbnail" className="block">
+              Thumbnail:
+            </label>
+            <input
+              type="file"
+              id="thumbnail"
+              name="thumbnail"
+              className="text-white text-center"
+              onChange={(e) => {
+                setCharacterData((characterData) => {
+                  return { ...characterData, thumbnail: e.target.files[0] };
+                });
+              }}
+            />
+          </div>
+          <div className="flex gap-4">
+            <label htmlFor="img" className="block">
+              Image:
+            </label>
+            <input
+              type="file"
+              id="img"
+              name="img"
+              className="text-white text-center"
+              onChange={(e) => {
+                setCharacterData((characterData) => {
+                  return { ...characterData, img: e.target.files[0] };
                 });
               }}
             />
