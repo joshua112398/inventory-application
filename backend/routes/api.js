@@ -22,6 +22,7 @@ const s3 = new S3Client({
 const s3Storage = multerS3({
   s3: s3,
   bucket: process.env.AWS_BUCKET_NAME,
+  contentType: multerS3.AUTO_CONTENT_TYPE,
   metadata: (req, file, cb) => {
     cb(null, {fieldname: file.fieldname})
   },
