@@ -4,6 +4,7 @@ import Form from '../components/form';
 import { Link } from 'react-router-dom';
 
 function Roles() {
+  const [fetchComplete, setFetchComplete] = useState(false);
   const [roles, setRoles] = useState([]);
   const [formVisibility, setFormVisibility] = useState(false);
   const [lastResponse, setLastResponse] = useState('');
@@ -17,6 +18,7 @@ function Roles() {
           `${import.meta.env.VITE_API_URL}/api/roles`
         );
         const fetchedRoles = await fetchedRolesJson.json();
+        setFetchComplete(true);
         setRoles(fetchedRoles);
       } catch (err) {
         console.log(err);
@@ -44,6 +46,10 @@ function Roles() {
     setFormVisibility((formVisibility) => {
       return !formVisibility;
     });
+  }
+
+  if (fetchComplete === false) {
+    return null;
   }
 
   return (

@@ -4,6 +4,7 @@ import Form from '../components/form';
 import { Link } from 'react-router-dom';
 
 function Visions() {
+  const [fetchComplete, setFetchComplete] = useState(false);
   const [visions, setVisions] = useState([]);
   const [formVisibility, setFormVisibility] = useState(false);
   const [lastResponse, setLastResponse] = useState('');
@@ -18,6 +19,7 @@ function Visions() {
           `${import.meta.env.VITE_API_URL}/api/visions`
         );
         const fetchedVisions = await fetchedVisionsJson.json();
+        setFetchComplete(true);
         setVisions(fetchedVisions);
       } catch (err) {
         console.log(err);
@@ -45,6 +47,10 @@ function Visions() {
     setFormVisibility((formVisibility) => {
       return !formVisibility;
     });
+  }
+
+  if (fetchComplete === false) {
+    return null;
   }
 
   return (

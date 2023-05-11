@@ -30,6 +30,7 @@ function DetailPage({ group }) {
     } else if (currentGroup === 'characters') {
       return (
         <div className="flex flex-wrap gap-5 p-4 text-white">
+          <img src={detail.img} />
           <p>{detail.name}</p>
           <p>{detail.title}</p>
           <p>{detail.vision.name}</p>

@@ -4,6 +4,7 @@ import Form from '../components/form';
 import { Link } from 'react-router-dom';
 
 function Characters() {
+  const [fetchComplete, setFetchComplete] = useState(false);
   const [characters, setCharacters] = useState([]);
   const [formVisibility, setFormVisibility] = useState(false);
   const [lastResponse, setLastResponse] = useState('');
@@ -17,6 +18,7 @@ function Characters() {
           `${import.meta.env.VITE_API_URL}/api/characters`
         );
         const fetchedCharacters = await fetchedCharactersJson.json();
+        setFetchComplete(true);
         setCharacters(fetchedCharacters);
       } catch (err) {
         console.log(err);
@@ -44,6 +46,10 @@ function Characters() {
     setFormVisibility((formVisibility) => {
       return !formVisibility;
     });
+  }
+
+  if (fetchComplete === false) {
+    return null;
   }
 
   return (

@@ -4,6 +4,7 @@ import Form from '../components/form';
 import { Link } from 'react-router-dom';
 
 function Weapons() {
+  const [fetchComplete, setFetchComplete] = useState(false);
   const [weapons, setWeapons] = useState([]);
   const [formVisibility, setFormVisibility] = useState(false);
   const [lastResponse, setLastResponse] = useState('');
@@ -17,6 +18,7 @@ function Weapons() {
           `${import.meta.env.VITE_API_URL}/api/weapons`
         );
         const fetchedWeapons = await fetchedWeaponsJson.json();
+        setFetchComplete(true);
         setWeapons(fetchedWeapons);
       } catch (err) {
         console.log(err);
@@ -44,6 +46,10 @@ function Weapons() {
     setFormVisibility((formVisibility) => {
       return !formVisibility;
     });
+  }
+
+  if (fetchComplete === false) {
+    return null;
   }
 
   return (

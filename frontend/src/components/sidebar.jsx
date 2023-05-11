@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 function Sidebar() {
   const [showMenu, setShowMenu] = useState(false);
@@ -53,32 +53,53 @@ function Sidebar() {
           }
           onClick={toggleMenuVisibility}
         />
-        <ul id="nav-list" className="flex flex-wrap sm:flex-col flex-row gap-2">
-          <li className="hover:bg-sky-950 w-full p-4 ">
+        <ul id="nav-list" className="flex flex-wrap flex-col gap-4">
+          <li className="w-full p-4">
             <h1>Vision.gg</h1>
           </li>
-          <li className="hover:bg-sky-950 w-full p-4">
-            <Link to="/">Home</Link>
+          <li className="ease-in duration-100 overflow-hidden rounded-xl hover:bg-sky-950 active:bg-sky-950 h-16 w-full">
+            <NavLink
+              to="/"
+              className="flex items-center h-full py-3 px-4 [&.active]:bg-sky-950"
+            >
+              <p>Home</p>
+            </NavLink>
           </li>
-          <li className="hover:bg-sky-950 w-full p-4">
-            <Link to="/characters" onClick={toggleMenuVisibility}>
-              Characters
-            </Link>
+          <li className="ease-in duration-100 overflow-hidden rounded-xl hover:bg-sky-950 active:bg-sky-950 h-16 w-full">
+            <NavLink
+              to="/characters"
+              className="flex items-center h-full py-3 px-4 [&.active]:bg-sky-950"
+              onClick={toggleMenuVisibility}
+            >
+              <p>Characters</p>
+            </NavLink>
           </li>
-          <li className="hover:bg-sky-950 w-full p-4">
-            <Link to="/visions" onClick={toggleMenuVisibility}>
-              Visions
-            </Link>
+          <li className="ease-in duration-100 overflow-hidden rounded-xl hover:bg-sky-950 active:bg-sky-950 h-16 w-full">
+            <NavLink
+              to="/visions"
+              className="flex items-center h-full py-3 px-4 [&.active]:bg-sky-950"
+              onClick={toggleMenuVisibility}
+            >
+              <p>Visions</p>
+            </NavLink>
           </li>
-          <li className="hover:bg-sky-950 w-full p-4">
-            <Link to="/weapons" onClick={toggleMenuVisibility}>
-              Weapons
-            </Link>
+          <li className="ease-in duration-100 overflow-hidden rounded-xl hover:bg-sky-950 active:bg-sky-950 h-16 w-full">
+            <NavLink
+              to="/weapons"
+              className="flex items-center h-full py-3 px-4 [&.active]:bg-sky-950"
+              onClick={toggleMenuVisibility}
+            >
+              <p>Weapons</p>
+            </NavLink>
           </li>
-          <li className="hover:bg-sky-950 w-full p-4">
-            <Link to="/roles" onClick={toggleMenuVisibility}>
-              Roles
-            </Link>
+          <li className="ease-in duration-100 overflow-hidden rounded-xl hover:bg-sky-950 active:bg-sky-950 h-16 w-full">
+            <NavLink
+              to="/roles"
+              className="flex items-center h-full py-3 px-4 [&.active]:bg-sky-950"
+              onClick={toggleMenuVisibility}
+            >
+              <p>Roles</p>
+            </NavLink>
           </li>
         </ul>
       </div>

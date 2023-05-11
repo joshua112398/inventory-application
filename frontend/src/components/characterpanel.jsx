@@ -22,7 +22,9 @@ function CharacterPanel({ character }) {
       className="w-28 h-40 flex flex-col justify-stretch overflow-hidden text-white bg-sky-900 rounded-md"
     >
       {renderThumbnail(character)}
-      <p className="m-auto h-auto">{character.name}</p>
+      <div className="flex-1 flex justify-center items-center">
+        <p className="text-center">{character.name}</p>
+      </div>
     </Link>
   );
 }
