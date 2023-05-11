@@ -55,14 +55,14 @@ function Sidebar() {
         />
         <ul id="nav-list" className="flex flex-wrap flex-col gap-4">
           <li className="w-full p-4">
-            <h1>Vision.gg</h1>
+            <h1 className="text-3xl">vision.gg</h1>
           </li>
           <li className="ease-in duration-100 overflow-hidden rounded-xl hover:bg-sky-950 active:bg-sky-950 h-16 w-full">
             <NavLink
               to="/"
               className="flex items-center h-full py-3 px-4 [&.active]:bg-sky-950"
             >
-              <p>Home</p>
+              <p className="text-lg">Home</p>
             </NavLink>
           </li>
           <li className="ease-in duration-100 overflow-hidden rounded-xl hover:bg-sky-950 active:bg-sky-950 h-16 w-full">
@@ -71,7 +71,7 @@ function Sidebar() {
               className="flex items-center h-full py-3 px-4 [&.active]:bg-sky-950"
               onClick={toggleMenuVisibility}
             >
-              <p>Characters</p>
+              <p className="text-lg">Characters</p>
             </NavLink>
           </li>
           <li className="ease-in duration-100 overflow-hidden rounded-xl hover:bg-sky-950 active:bg-sky-950 h-16 w-full">
@@ -80,7 +80,7 @@ function Sidebar() {
               className="flex items-center h-full py-3 px-4 [&.active]:bg-sky-950"
               onClick={toggleMenuVisibility}
             >
-              <p>Visions</p>
+              <p className="text-lg">Visions</p>
             </NavLink>
           </li>
           <li className="ease-in duration-100 overflow-hidden rounded-xl hover:bg-sky-950 active:bg-sky-950 h-16 w-full">
@@ -89,7 +89,7 @@ function Sidebar() {
               className="flex items-center h-full py-3 px-4 [&.active]:bg-sky-950"
               onClick={toggleMenuVisibility}
             >
-              <p>Weapons</p>
+              <p className="text-lg">Weapons</p>
             </NavLink>
           </li>
           <li className="ease-in duration-100 overflow-hidden rounded-xl hover:bg-sky-950 active:bg-sky-950 h-16 w-full">
@@ -98,7 +98,7 @@ function Sidebar() {
               className="flex items-center h-full py-3 px-4 [&.active]:bg-sky-950"
               onClick={toggleMenuVisibility}
             >
-              <p>Roles</p>
+              <p className="text-lg">Roles</p>
             </NavLink>
           </li>
         </ul>

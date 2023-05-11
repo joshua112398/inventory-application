@@ -19,7 +19,7 @@ function CharacterPanel({ character }) {
   return (
     <Link
       to={'/characters/' + character._id}
-      className="w-28 h-40 flex flex-col justify-stretch overflow-hidden text-white bg-sky-900 rounded-md"
+      className="w-28 h-40 flex flex-col justify-stretch overflow-hidden text-white bg-sky-900 rounded-xl hover:scale-110 ease-in duration-75"
     >
       {renderThumbnail(character)}
       <div className="flex-1 flex justify-center items-center">
