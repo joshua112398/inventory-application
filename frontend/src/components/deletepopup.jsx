@@ -11,7 +11,7 @@ function DeletePopup({ visible, toggleVisibility, group, name, id }) {
     async function startFetching() {
       if (group !== 'characters') {
         const fetchedCharactersJson = await fetch(
-          `http://localhost:3000/api/characters/?${type}=${id}`
+          `${import.meta.env.VITE_API_URL}/api/characters/?${type}=${id}`
         );
         const fetchedCharacters = await fetchedCharactersJson.json();
         setConflictingCharacters(fetchedCharacters);
@@ -38,9 +38,12 @@ function DeletePopup({ visible, toggleVisibility, group, name, id }) {
 
   async function deleteItem() {
     try {
-      const response = await fetch(`http://localhost:3000/api/${group}/${id}`, {
-        method: 'DELETE',
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/${group}/${id}`,
+        {
+          method: 'DELETE',
+        }
+      );
     } catch (err) {
       console.log(err);
     }

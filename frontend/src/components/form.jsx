@@ -36,11 +36,13 @@ function Form({ group, isVisible, toggleForm, postLastResponse }) {
     async function startFetching() {
       try {
         const fetchedWeaponsJson = await fetch(
-          'http://localhost:3000/api/weapons'
+          `${import.meta.env.VITE_API_URL}/api/weapons`
         );
-        const fetchedRolesJson = await fetch('http://localhost:3000/api/roles');
+        const fetchedRolesJson = await fetch(
+          `${import.meta.env.VITE_API_URL}/api/roles`
+        );
         const fetchedVisionsJson = await fetch(
-          'http://localhost:3000/api/visions'
+          `${import.meta.env.VITE_API_URL}/api/visions`
         );
         const fetchedWeapons = await fetchedWeaponsJson.json();
         const fetchedRoles = await fetchedRolesJson.json();
@@ -126,7 +128,7 @@ function Form({ group, isVisible, toggleForm, postLastResponse }) {
         </button>
         <form
           method="post"
-          action="http://localhost:3000/api/characters"
+          action={`${import.meta.env.VITE_API_URL}/api/characters`}
           onSubmit={handleSubmit}
           className="flex flex-col gap-4"
         >
@@ -305,7 +307,7 @@ function Form({ group, isVisible, toggleForm, postLastResponse }) {
         </button>
         <form
           method="post"
-          action="http://localhost:3000/api/visions"
+          action={`${import.meta.env.VITE_API_URL}/api/visions`}
           onSubmit={handleSubmit}
           className="flex flex-col gap-4"
         >
@@ -356,7 +358,7 @@ function Form({ group, isVisible, toggleForm, postLastResponse }) {
         </button>
         <form
           method="post"
-          action="http://localhost:3000/api/weapons"
+          action={`${import.meta.env.VITE_API_URL}/api/weapons`}
           onSubmit={handleSubmit}
           className="flex flex-col gap-4"
         >
@@ -407,7 +409,7 @@ function Form({ group, isVisible, toggleForm, postLastResponse }) {
         </button>
         <form
           method="post"
-          action="http://localhost:3000/api/roles"
+          action={`${import.meta.env.VITE_API_URL}/api/roles`}
           onSubmit={handleSubmit}
           className="flex flex-col gap-4"
         >

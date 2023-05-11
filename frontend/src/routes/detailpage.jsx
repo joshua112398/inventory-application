@@ -13,7 +13,7 @@ function DetailPage({ group }) {
   useEffect(() => {
     async function startFetching() {
       const fetchedDetail = await fetch(
-        `http://localhost:3000/api/${group}/${id}`
+        `${import.meta.env.VITE_API_URL}/api/${group}/${id}`
       );
       const jsonDetail = await fetchedDetail.json();
       setDetail(jsonDetail);

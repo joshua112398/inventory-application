@@ -14,7 +14,7 @@ function Characters() {
     async function startFetching() {
       try {
         const fetchedCharactersJson = await fetch(
-          'http://localhost:3000/api/characters'
+          `${import.meta.env.VITE_API_URL}/api/characters`
         );
         const fetchedCharacters = await fetchedCharactersJson.json();
         setCharacters(fetchedCharacters);

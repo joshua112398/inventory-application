@@ -15,7 +15,7 @@ function Visions() {
     async function startFetching() {
       try {
         const fetchedVisionsJson = await fetch(
-          'http://localhost:3000/api/visions'
+          `${import.meta.env.VITE_API_URL}/api/visions`
         );
         const fetchedVisions = await fetchedVisionsJson.json();
         setVisions(fetchedVisions);

@@ -13,7 +13,9 @@ function Roles() {
     // Fetch characters from database through a Rest API backend
     async function startFetching() {
       try {
-        const fetchedRolesJson = await fetch('http://localhost:3000/api/roles');
+        const fetchedRolesJson = await fetch(
+          `${import.meta.env.VITE_API_URL}/api/roles`
+        );
         const fetchedRoles = await fetchedRolesJson.json();
         setRoles(fetchedRoles);
       } catch (err) {

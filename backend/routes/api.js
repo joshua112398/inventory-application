@@ -60,7 +60,7 @@ router.delete('/characters/:id', characterController.deleteCharacter);
 router.get('/visions', visionController.getVisions);
 
 /* POST to visions */
-router.post('/visions', visionController.createVision);
+router.post('/visions', uploadImage.none(), visionController.createVision);
 
 /* GET vision details */
 router.get('/visions/:id', visionController.getVisionDetail);
@@ -72,7 +72,7 @@ router.delete('/visions/:id', visionController.deleteVision);
 router.get('/weapons', weaponController.getWeapons);
 
 /* POST to weapons */
-router.post('/weapons', weaponController.createWeapon);
+router.post('/weapons', uploadImage.none(), weaponController.createWeapon);
 
 /* GET weapon details */
 router.get('/weapons/:id', weaponController.getWeaponDetail);
@@ -84,7 +84,7 @@ router.delete('/weapons/:id', weaponController.deleteWeapon);
 router.get('/roles', roleController.getRoles);
 
 /* POST to roles */
-router.post('/roles', roleController.createRole);
+router.post('/roles', uploadImage.none(), roleController.createRole);
 
 /* GET role details */
 router.get('/roles/:id', roleController.getRoleDetail);

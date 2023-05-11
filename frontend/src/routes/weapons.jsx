@@ -14,7 +14,7 @@ function Weapons() {
     async function startFetching() {
       try {
         const fetchedWeaponsJson = await fetch(
-          'http://localhost:3000/api/weapons'
+          `${import.meta.env.VITE_API_URL}/api/weapons`
         );
         const fetchedWeapons = await fetchedWeaponsJson.json();
         setWeapons(fetchedWeapons);
