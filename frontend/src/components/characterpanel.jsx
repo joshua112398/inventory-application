@@ -2,13 +2,6 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 function CharacterPanel({ character }) {
-  function toBase64(arr) {
-    //arr = new Uint8Array(arr) if it's an ArrayBuffer
-    return window.btoa(
-      arr.reduce((data, byte) => data + String.fromCharCode(byte), '')
-    );
-  }
-
   function renderThumbnail(character) {
     if (!character.thumbnail) {
       return null;

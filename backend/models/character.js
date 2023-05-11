@@ -11,7 +11,9 @@ const CharacterSchema = new Schema({
   rating: { type: Number, required: true },
   amount: { type: Number, required: true },
   thumbnail: { type: String, required: true },
+  thumbnailKey: { type: String, required: true },
   img: { type: String, required: true },
+  imgKey: { type: String, required: true },
 });
 
 CharacterSchema.virtual('url').get(function() {

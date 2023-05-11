@@ -1,3 +1,4 @@
+require("dotenv").config();
 const mongoose = require("mongoose");
 const Character = require("../models/character");
 const Role = require("../models/role");
@@ -6,6 +7,14 @@ const Weapon = require("../models/weapon");
 const fs = require("fs");
 const path = require("path");
 const { body, validationResult } = require("express-validator");
+const { S3Client, DeleteObjectCommand } = require("@aws-sdk/client-s3");
+const s3 = new S3Client({
+  credentials: {
+    accessKeyId: process.env.AWS_ACCESS_KEY,
+    secretAccessKey: process.env.AWS_SECRET_KEY,
+  },
+  region: process.env.AWS_BUCKET_REGION,
+});
 
 //////////////////////////
 //// REST API METHODS ////
@@ -111,7 +120,9 @@ exports.createCharacter = [
         rating: req.body.rating,
         amount: req.body.amount,
         thumbnail: req.files.thumbnail[0].location,
+        thumbnailKey: req.files.thumbnail[0].key,
         img: req.files.img[0].location,
+        imgKey: req.files.img[0].key,
       });
       await character.save();
       return res.status(200).json(character);
@@ -149,6 +160,7 @@ exports.getCharacterDetail = async (req, res, next) => {
 /* DELETE character*/
 exports.deleteCharacter = async (req, res, next) => {
   try {
+    const charInfo = await Character.findOne({_id: req.params.id}).exec();
     const result = await Character.deleteOne({_id: req.params.id}).exec();
     if (result.deletedCount < 1) {
       const error = {
@@ -159,6 +171,14 @@ exports.deleteCharacter = async (req, res, next) => {
       };
       return res.status(404).json(error);
     }
+    const thumbnailData = await s3.send(new DeleteObjectCommand({
+      Bucket: process.env.AWS_BUCKET_NAME,
+      Key: charInfo.thumbnailKey,
+    }));
+    const imgData = await s3.send(new DeleteObjectCommand({
+      Bucket: process.env.AWS_BUCKET_NAME,
+      Key: charInfo.imgKey,
+    }));
     return res.status(200).json(result);
   }
   catch(err) {

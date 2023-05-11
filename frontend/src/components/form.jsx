@@ -61,12 +61,8 @@ function Form({ group, isVisible, toggleForm, postLastResponse }) {
       e.preventDefault();
       const form = e.target;
       const formData = new FormData(form);
-      formData.append('thumbnail', characterData.thumbnail);
-      formData.append('img', characterData.img);
-      console.log(characterData);
-      console.log(formData);
       const url = form.action;
-
+      console.log('Posting');
       const response = await fetch(url, {
         method: 'POST',
         body: formData,
@@ -122,8 +118,6 @@ function Form({ group, isVisible, toggleForm, postLastResponse }) {
         </option>
       );
     });
-
-    console.log(visionComponents);
 
     return (
       <div className="relative w-4/5 max-w-lg max-h-full bg-sky-900 text-white p-8 rounded-md overflow-auto">
