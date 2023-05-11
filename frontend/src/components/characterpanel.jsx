@@ -10,6 +10,7 @@ function CharacterPanel({ character }) {
         <img
           style={{ backgroundColor: `${character.vision.color}` }}
           src={character.thumbnail}
+          className="h-28 overflow-hidden object-cover"
         />
       );
     }
@@ -21,7 +22,7 @@ function CharacterPanel({ character }) {
       className="w-28 h-40 flex flex-col justify-stretch overflow-hidden text-white bg-sky-900 rounded-md"
     >
       {renderThumbnail(character)}
-      <p className="m-auto">{character.name}</p>
+      <p className="m-auto h-auto">{character.name}</p>
     </Link>
   );
 }
