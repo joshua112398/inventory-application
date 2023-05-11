@@ -55,7 +55,7 @@ function Sidebar() {
         />
         <ul id="nav-list" className="flex flex-wrap flex-col gap-4">
           <li className="w-full p-4">
-            <h1 className="text-3xl">vision.gg</h1>
+            <h1 className="text-3xl font-bold">vision.gg</h1>
           </li>
           <li className="ease-in duration-100 overflow-hidden rounded-xl hover:bg-sky-950 active:bg-sky-950 h-16 w-full">
             <NavLink

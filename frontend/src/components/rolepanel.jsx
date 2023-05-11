@@ -5,9 +5,9 @@ function RolePanel({ role }) {
   return (
     <Link
       to={'/roles/' + role._id}
-      className="w-32 h-48 flex flex-col gap-2 text-white bg-sky-900 p-4 rounded-xl hover:scale-110 ease-in duration-75"
+      className="w-96 h-24 flex items-center text-white bg-sky-900 py-4 px-8 rounded-xl hover:scale-105 ease-in duration-75"
     >
-      <p>{role.name}</p>
+      <p className="text-2xl">{role.name}</p>
     </Link>
   );
 }

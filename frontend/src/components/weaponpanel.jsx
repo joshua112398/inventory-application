@@ -5,9 +5,11 @@ function WeaponPanel({ weapon }) {
   return (
     <Link
       to={'/weapons/' + weapon._id}
-      className="w-32 h-48 flex flex-col gap-2 text-white bg-sky-900 p-4 rounded-xl hover:scale-110 ease-in duration-75"
+      className="w-28 h-32 flex text-white bg-sky-900 rounded-xl hover:scale-110 ease-in duration-75"
     >
-      <p>{weapon.name}</p>
+      <div className="flex-1 flex justify-center items-center">
+        <p className="text-center">{weapon.name}</p>
+      </div>
     </Link>
   );
 }

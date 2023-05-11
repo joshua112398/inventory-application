@@ -5,9 +5,10 @@ function VisionPanel({ vision }) {
   return (
     <Link
       to={'/visions/' + vision._id}
-      className="w-32 h-48 flex flex-col gap-2 text-white bg-sky-900 p-4 rounded-xl hover:scale-110 ease-in duration-75"
+      style={{ borderColor: `${vision.color}` }}
+      className="w-96 h-24 border-l-4 flex items-center text-white bg-sky-900 py-4 px-8 rounded-xl hover:scale-105 ease-in duration-75"
     >
-      <p>{vision.name}</p>
+      <p className="text-2xl">{vision.name}</p>
     </Link>
   );
 }
