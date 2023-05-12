@@ -60,6 +60,10 @@ function Form({
         if (existingData != '') {
           if (group === 'weapons') {
             setWeaponData(existingData);
+          } else if (group === 'roles') {
+            setRoleData(existingData);
+          } else if (group === 'visions') {
+            setVisionData(existingData);
           }
         }
       } catch (err) {

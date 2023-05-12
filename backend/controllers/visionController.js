@@ -22,13 +22,11 @@ exports.createVision = [
   body("name")
     .trim()
     .isLength({min: 1})
-    .escape()
     .withMessage("Name must be specified")
     .isAlphanumeric("en-US", {ignore: " -'"})
     .withMessage("Name must contain only letters, numbers, or hyphens."),
   body("color")
     .isLength({min: 1})
-    .escape()
     .withMessage("Color must be specified"),
 
   // Process fields
@@ -75,6 +73,53 @@ exports.getVisionDetail = async (req, res, next) => {
     return next(err);
   }
 };
+
+/* UPDATE vision */
+exports.updateVision = [
+  // Validate and sanitize fields
+  body("name")
+    .trim()
+    .isLength({min: 1})
+    .withMessage("Name must be specified")
+    .isAlphanumeric("en-US", {ignore: " -'"})
+    .withMessage("Name must contain only letters, numbers, or hyphens."),
+  body("color")
+    .isLength({min: 1})
+    .withMessage("Color must be specified"),
+
+  async (req, res, next) => {
+    try {
+      const errors = validationResult(req);
+      
+      // Return validation errors object to the client if errors exist
+      if (!errors.isEmpty()) {
+        return res.status(400).json(errors);
+      }
+
+      // Find weapon to be updated
+      const vision = await Vision.findOne({_id: req.params.id}).exec();
+      if (vision == null) {
+        const error = {
+          error: {
+            value: req.params.id,
+            msg: "Vision not found",
+          },
+        };
+        return res.status(404).json(error);
+      }
+
+      // Update fields
+      vision.name = req.body.name;
+      vision.color = req.body.color;
+      await vision.save();
+
+      return res.status(200).json(vision);
+      
+    } catch (err) {
+      return next(err);
+    }
+  }
+];
 
 /* DELETE vision*/
 exports.deleteVision = async (req, res, next) => {

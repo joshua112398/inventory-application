@@ -66,6 +66,9 @@ router.post('/visions', uploadImage.none(), visionController.createVision);
 /* GET vision details */
 router.get('/visions/:id', visionController.getVisionDetail);
 
+/* UPDATE vision */
+router.put('/visions/:id', uploadImage.none(), visionController.updateVision);
+
 /* DELETE vision */
 router.delete('/visions/:id', visionController.deleteVision);
 
@@ -92,6 +95,9 @@ router.post('/roles', uploadImage.none(), roleController.createRole);
 
 /* GET role details */
 router.get('/roles/:id', roleController.getRoleDetail);
+
+/* UPDATE role */
+router.put('/roles/:id', uploadImage.none(), roleController.updateRole);
 
 /* DELETE role */
 router.delete('/roles/:id', roleController.deleteRole);

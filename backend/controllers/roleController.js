@@ -21,14 +21,12 @@ exports.createRole = [
   body("name")
     .trim()
     .isLength({min: 1})
-    .escape()
     .withMessage("Name must be specified")
     .isAlphanumeric("en-US", {ignore: " -'"})
     .withMessage("Name must contain only letters, numbers, or hyphens."),
   body("description")
     .trim()
     .isLength({min: 1})
-    .escape()
     .withMessage("Description must be specified"),
 
   // Process fields
@@ -75,6 +73,54 @@ exports.getRoleDetail = async (req, res, next) => {
     return next(err);
   }
 };
+
+/* UPDATE role */
+exports.updateRole = [
+  // Validate and sanitize fields
+  body("name")
+    .trim()
+    .isLength({min: 1})
+    .withMessage("Name must be specified")
+    .isAlphanumeric("en-US", {ignore: " -'"})
+    .withMessage("Name must contain only letters, numbers, or hyphens."),
+  body("description")
+    .trim()
+    .isLength({min: 1})
+    .withMessage("Description must be specified"),
+
+  async (req, res, next) => {
+    try {
+      const errors = validationResult(req);
+      
+      // Return validation errors object to the client if errors exist
+      if (!errors.isEmpty()) {
+        return res.status(400).json(errors);
+      }
+
+      // Find weapon to be updated
+      const role = await Role.findOne({_id: req.params.id}).exec();
+      if (role == null) {
+        const error = {
+          error: {
+            value: req.params.id,
+            msg: "Role not found",
+          },
+        };
+        return res.status(404).json(error);
+      }
+
+      // Update fields
+      role.name = req.body.name;
+      role.description = req.body.description;
+      await role.save();
+
+      return res.status(200).json(role);
+      
+    } catch (err) {
+      return next(err);
+    }
+  }
+];
 
 /* DELETE role*/
 exports.deleteRole = async (req, res, next) => {

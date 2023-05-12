@@ -26,14 +26,12 @@ exports.createWeapon = [
   body("name")
     .trim()
     .isLength({min: 1})
-    .escape()
     .withMessage("Name must be specified")
     .isAlphanumeric("en-US", {ignore: " -'"})
     .withMessage("Name must contain only letters, numbers, or hyphens."),
   body("description")
     .trim()
     .isLength({min: 1})
-    .escape()
     .withMessage("Description must be specified"),
 
   // Process fields
@@ -86,14 +84,12 @@ exports.updateWeapon = [
   body("name")
     .trim()
     .isLength({min: 1})
-    .escape()
     .withMessage("Name must be specified")
     .isAlphanumeric("en-US", {ignore: " -'"})
     .withMessage("Name must contain only letters, numbers, or hyphens."),
   body("description")
     .trim()
     .isLength({min: 1})
-    .escape()
     .withMessage("Description must be specified"),
 
   async (req, res, next) => {
@@ -121,7 +117,7 @@ exports.updateWeapon = [
       weapon.name = req.body.name;
       weapon.description = req.body.description;
       await weapon.save();
-      
+
       return res.status(200).json(weapon);
       
     } catch (err) {

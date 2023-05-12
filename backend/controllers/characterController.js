@@ -57,39 +57,33 @@ exports.createCharacter = [
   body("name")
     .trim()
     .isLength({min: 1})
-    .escape()
     .withMessage("Name must be specified")
     .isAlphanumeric("en-US", {ignore: " -'"})
     .withMessage("Name must contain only letters, numbers, or hyphens."),
   body("title")
     .trim()
     .isLength({min: 1})
-    .escape()
     .withMessage("Title must be specified")
     .isAlphanumeric("en-US", {ignore: " -'"})
     .withMessage("Title must contain only letters, numbers, or hyphens."),
   body("vision")
     .trim()
     .isLength({min: 1})
-    .escape()
     .withMessage("Vision must be specified"),
   body("role")
     .exists()
     .withMessage("At least one role must be specified"),
   body("weapon")
-    .trim()
-    .escape(),
+    .trim(),
   body("rating")
     .trim()
     .isLength({min: 1})
-    .escape()
     .withMessage("Rating must be specified")
     .isNumeric()
     .withMessage("Rating must be a number"),
   body("amount")
     .trim()
     .isLength({min: 1})
-    .escape()
     .withMessage("Amount must be specified")
     .isNumeric()
     .withMessage("Amount must be a number"),
