@@ -78,6 +78,9 @@ router.post('/weapons', uploadImage.none(), weaponController.createWeapon);
 /* GET weapon details */
 router.get('/weapons/:id', weaponController.getWeaponDetail);
 
+/* UPDATE weapon */
+router.put('/weapons/:id', uploadImage.none(), weaponController.updateWeapon);
+
 /* DELETE weapon */
 router.delete('/weapons/:id', weaponController.deleteWeapon);
 

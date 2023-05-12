@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import DeletePopup from '../components/deletepopup';
+import Form from '../components/form';
 
 function DetailPage({ group }) {
   // Get the id from the URL
@@ -8,6 +9,8 @@ function DetailPage({ group }) {
   const [detail, setDetail] = useState('');
   const [currentGroup, setCurrentGroup] = useState(group);
   const [showDeletePopup, setShowDeletePopup] = useState(false);
+  const [formVisibility, setFormVisibility] = useState(false);
+  const [lastFormResponse, setLastFormResponse] = useState('');
 
   // Fetch data based on id and collection indicated by the group prop
   useEffect(() => {
@@ -20,7 +23,7 @@ function DetailPage({ group }) {
       setCurrentGroup(group);
     }
     startFetching();
-  }, [group, id]);
+  }, [group, id, lastFormResponse]);
 
   /* If detail state is empty, render null. Otherwise render details.
   Different renders based on what group the requested detail is in */
@@ -88,16 +91,37 @@ function DetailPage({ group }) {
     setShowDeletePopup((showDeletePopup) => !showDeletePopup);
   }
 
+  // State handler to get last response from Form component
+  function postLastFormResponse(response) {
+    setLastFormResponse(response);
+  }
+
+  function toggleForm() {
+    setFormVisibility((formVisibility) => {
+      return !formVisibility;
+    });
+  }
+
   return (
     <>
       {renderDetail(currentGroup)}
+      <button className="text-rose-600 p-4" onClick={toggleForm}>
+        Update
+      </button>
       <button className="text-rose-600 p-4" onClick={toggleDeletePopup}>
         Delete
       </button>
+      <Form
+        group={currentGroup}
+        isVisible={formVisibility}
+        postLastResponse={postLastFormResponse}
+        toggleForm={toggleForm}
+        existingData={detail}
+      />
       <DeletePopup
         visible={showDeletePopup}
         toggleVisibility={toggleDeletePopup}
-        group={group}
+        group={currentGroup}
         name={detail.name}
         id={id}
       />

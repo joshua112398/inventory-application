@@ -1,7 +1,13 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-function Form({ group, isVisible, toggleForm, postLastResponse }) {
+function Form({
+  group,
+  isVisible,
+  toggleForm,
+  postLastResponse,
+  existingData,
+}) {
   const [characterData, setCharacterData] = useState({
     name: '',
     title: '',
@@ -33,6 +39,7 @@ function Form({ group, isVisible, toggleForm, postLastResponse }) {
   useEffect(() => {
     // Fetch current list of weapons, roles, and visions to populate the character creation
     // form with them
+    // Also set state to existing data passed to form (used for updating existing items)
     async function startFetching() {
       try {
         const fetchedWeaponsJson = await fetch(
@@ -50,23 +57,39 @@ function Form({ group, isVisible, toggleForm, postLastResponse }) {
         setRoles(fetchedRoles);
         setWeapons(fetchedWeapons);
         setVisions(fetchedVisions);
+        if (existingData != '') {
+          if (group === 'weapons') {
+            setWeaponData(existingData);
+          }
+        }
       } catch (err) {
         console.log(err);
       }
     }
 
     startFetching();
-  }, []);
+  }, [group, existingData]);
 
   async function handleSubmit(e) {
     try {
       e.preventDefault();
       const form = e.target;
       const formData = new FormData(form);
-      const url = form.action;
-      console.log('Posting');
+      let url = form.action;
+      console.log(form);
+
+      // PUT if existing data, POST if new data, add id to url if PUT
+      let method;
+      if (existingData === '') {
+        method = 'POST';
+      } else {
+        method = 'PUT';
+        url = url + `/${existingData._id}`;
+      }
+
+      // Perform fetch PUT or POST
       const response = await fetch(url, {
-        method: 'POST',
+        method: method,
         body: formData,
       });
       const responseConverted = await response.json();

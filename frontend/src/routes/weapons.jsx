@@ -68,6 +68,7 @@ function Weapons() {
         isVisible={formVisibility}
         postLastResponse={postLastResponse}
         toggleForm={toggleForm}
+        existingData=""
       />
     </>
   );

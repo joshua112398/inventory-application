@@ -68,6 +68,7 @@ function Characters() {
         isVisible={formVisibility}
         postLastResponse={postLastResponse}
         toggleForm={toggleForm}
+        existingData=""
       />
     </>
   );

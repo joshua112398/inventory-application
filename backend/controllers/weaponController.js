@@ -40,7 +40,6 @@ exports.createWeapon = [
   async (req, res, next) => {
     try {
       const errors = validationResult(req);
-      console.log(errors);
       
       // Return validation errors object to the client if errors exist
       if (!errors.isEmpty()) {
@@ -80,6 +79,56 @@ exports.getWeaponDetail = async (req, res, next) => {
     return next(err);
   }
 };
+
+/* UPDATE weapon */
+exports.updateWeapon = [
+  // Validate and sanitize fields
+  body("name")
+    .trim()
+    .isLength({min: 1})
+    .escape()
+    .withMessage("Name must be specified")
+    .isAlphanumeric("en-US", {ignore: " -'"})
+    .withMessage("Name must contain only letters, numbers, or hyphens."),
+  body("description")
+    .trim()
+    .isLength({min: 1})
+    .escape()
+    .withMessage("Description must be specified"),
+
+  async (req, res, next) => {
+    try {
+      const errors = validationResult(req);
+      
+      // Return validation errors object to the client if errors exist
+      if (!errors.isEmpty()) {
+        return res.status(400).json(errors);
+      }
+
+      // Find weapon to be updated
+      const weapon = await Weapon.findOne({_id: req.params.id}).exec();
+      if (weapon == null) {
+        const error = {
+          error: {
+            value: req.params.id,
+            msg: "Weapon not found",
+          },
+        };
+        return res.status(404).json(error);
+      }
+
+      // Update fields
+      weapon.name = req.body.name;
+      weapon.description = req.body.description;
+      await weapon.save();
+      
+      return res.status(200).json(weapon);
+      
+    } catch (err) {
+      return next(err);
+    }
+  }
+];
 
 /* DELETE weapon*/
 exports.deleteWeapon = async (req, res, next) => {
