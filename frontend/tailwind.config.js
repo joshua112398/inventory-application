@@ -5,11 +5,17 @@ const defaultTheme = require('tailwindcss/defaultTheme');
 export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}',],
   theme: {
-    extend: {},
+    extend: {
+      backgroundImage: {
+        'home-pattern': "url('/src/assets/Dainsleif_Portrait.png')",
+      }
+    },
     fontFamily: {
       'sans': ['Lexend Deca', 'sans-serif', ...defaultTheme.fontFamily.sans],
     }
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/forms'),
+  ],
 }
 

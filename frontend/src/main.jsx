@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Root from './routes/root';
+import Home from './routes/home';
 import Characters from './routes/characters';
 import Weapons from './routes/weapons';
 import Visions from './routes/visions';
@@ -16,6 +17,11 @@ const router = createBrowserRouter([
     element: <Root />,
     errorElement: <ErrorPage />,
     children: [
+      {
+        path: '/',
+        element: <Home />,
+        errorElement: <ErrorPage />,
+      },
       {
         path: 'characters',
         element: <Characters />,

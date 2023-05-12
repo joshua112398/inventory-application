@@ -148,7 +148,7 @@ function Form({ group, isVisible, toggleForm, postLastResponse }) {
               className="text-black"
             />
           </div>
-          <div className="flex gap-4">
+          <div className="flex flex-col gap-1">
             <label htmlFor="title" className="block">
               Title:
             </label>
@@ -164,7 +164,7 @@ function Form({ group, isVisible, toggleForm, postLastResponse }) {
               className="text-black"
             />
           </div>
-          <div className="flex gap-4">
+          <div className="flex flex-col gap-1">
             <label htmlFor="vision" className="block">
               Vision:
             </label>
@@ -183,7 +183,7 @@ function Form({ group, isVisible, toggleForm, postLastResponse }) {
               {visionComponents}
             </select>
           </div>
-          <div className="flex gap-4">
+          <div className="flex flex-col gap-1">
             <label htmlFor="weapon" className="block">
               Weapon:
             </label>
@@ -202,7 +202,7 @@ function Form({ group, isVisible, toggleForm, postLastResponse }) {
               {weaponComponents}
             </select>
           </div>
-          <div className="flex gap-4">
+          <div className="flex flex-col gap-1">
             <label htmlFor="role" className="block">
               Role:
             </label>
@@ -220,9 +220,9 @@ function Form({ group, isVisible, toggleForm, postLastResponse }) {
               {roleComponents}
             </select>
           </div>
-          <div className="flex gap-4">
+          <div className="flex flex-col gap-1">
             <label htmlFor="rating" className="block">
-              Rating:
+              Rating: <span>{characterData.rating}</span>
             </label>
             <input
               type="range"
@@ -238,7 +238,6 @@ function Form({ group, isVisible, toggleForm, postLastResponse }) {
                 });
               }}
             />
-            <span>{characterData.rating}</span>
           </div>
           <div className="flex gap-4">
             <label htmlFor="amount" className="block">
@@ -260,7 +259,7 @@ function Form({ group, isVisible, toggleForm, postLastResponse }) {
               }}
             />
           </div>
-          <div className="flex gap-4">
+          <div className="flex flex-col gap-1">
             <label htmlFor="thumbnail" className="block">
               Thumbnail:
             </label>
@@ -276,7 +275,7 @@ function Form({ group, isVisible, toggleForm, postLastResponse }) {
               }}
             />
           </div>
-          <div className="flex gap-4">
+          <div className="flex flex-col gap-1">
             <label htmlFor="img" className="block">
               Image:
             </label>
@@ -327,7 +326,7 @@ function Form({ group, isVisible, toggleForm, postLastResponse }) {
               className="text-black"
             />
           </div>
-          <div className="flex gap-4">
+          <div className="flex flex-col gap-1">
             <label htmlFor="color" className="block">
               Color:
             </label>
@@ -382,7 +381,7 @@ function Form({ group, isVisible, toggleForm, postLastResponse }) {
             <label htmlFor="description" className="block">
               Description:
             </label>
-            <input
+            <textarea
               value={weaponData.description}
               onChange={(e) => {
                 setWeaponData((weaponData) => {
@@ -392,7 +391,8 @@ function Form({ group, isVisible, toggleForm, postLastResponse }) {
               id="description"
               name="description"
               className="text-black"
-            />
+              rows="6"
+            ></textarea>
           </div>
           <button type="submit">Submit</button>
           {showPostErrors()}
@@ -433,7 +433,7 @@ function Form({ group, isVisible, toggleForm, postLastResponse }) {
             <label htmlFor="description" className="block">
               Description:
             </label>
-            <input
+            <textarea
               value={roleData.description}
               onChange={(e) => {
                 setRoleData((roleData) => {
@@ -443,7 +443,8 @@ function Form({ group, isVisible, toggleForm, postLastResponse }) {
               id="description"
               name="description"
               className="text-black"
-            />
+              rows="6"
+            ></textarea>
           </div>
           <button type="submit">Submit</button>
           {showPostErrors()}
