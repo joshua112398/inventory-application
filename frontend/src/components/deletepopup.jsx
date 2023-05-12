@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function DeletePopup({ visible, toggleVisibility, group, name, id }) {
   const [conflictingCharacters, setConflictingCharacters] = useState([]);
+  const navigate = useNavigate();
   const type = group.slice(0, group.length - 1);
 
   useEffect(() => {
@@ -44,6 +45,7 @@ function DeletePopup({ visible, toggleVisibility, group, name, id }) {
           method: 'DELETE',
         }
       );
+      navigate(`/${group}`);
     } catch (err) {
       console.log(err);
     }
@@ -56,13 +58,9 @@ function DeletePopup({ visible, toggleVisibility, group, name, id }) {
       return (
         <>
           <p>Are you sure you want to delete? </p>
-          <Link
-            to={'/' + group}
-            onClick={deleteItem}
-            className="text-rose-600 p-4"
-          >
+          <button onClick={deleteItem} className="text-rose-600 p-4">
             Delete
-          </Link>
+          </button>
         </>
       );
       // Else, we need to provide the user a list of characters that are assigned the item
