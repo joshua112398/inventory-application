@@ -99,11 +99,7 @@ exports.createCharacter = [
         return res.status(400).json(errors);
       }
 
-      console.log(req.files);
-
       // Add character to database if no errors, return the newly created character as json
-      console.log("hey");
-      console.log(req.files);
       const character = new Character({
         name: req.body.name,
         title: req.body.title,
@@ -125,6 +121,97 @@ exports.createCharacter = [
       return next(err);
     }
   },
+];
+
+/* UPDATE character */
+exports.updateCharacter = [
+  // Validate and sanitize fields
+  body("name")
+    .trim()
+    .isLength({min: 1})
+    .withMessage("Name must be specified")
+    .isAlphanumeric("en-US", {ignore: " -'"})
+    .withMessage("Name must contain only letters, numbers, or hyphens."),
+  body("title")
+    .trim()
+    .isLength({min: 1})
+    .withMessage("Title must be specified")
+    .isAlphanumeric("en-US", {ignore: " -'"})
+    .withMessage("Title must contain only letters, numbers, or hyphens."),
+  body("vision")
+    .trim()
+    .isLength({min: 1})
+    .withMessage("Vision must be specified"),
+  body("role")
+    .exists()
+    .withMessage("At least one role must be specified"),
+  body("weapon")
+    .trim(),
+  body("rating")
+    .trim()
+    .isLength({min: 1})
+    .withMessage("Rating must be specified")
+    .isNumeric()
+    .withMessage("Rating must be a number"),
+  body("amount")
+    .trim()
+    .isLength({min: 1})
+    .withMessage("Amount must be specified")
+    .isNumeric()
+    .withMessage("Amount must be a number"),
+
+  async (req, res, next) => {
+    try {
+      const errors = validationResult(req);
+      
+      // Return validation errors object to the client if errors exist
+      if (!errors.isEmpty()) {
+        return res.status(400).json(errors);
+      }
+
+      // Find weapon to be updated
+      const character = await Character.findOne({_id: req.params.id}).exec();
+      if (character == null) {
+        const error = {
+          error: {
+            value: req.params.id,
+            msg: "Character not found",
+          },
+        };
+        return res.status(404).json(error);
+      }
+
+      // Delete existing images from cloud storage since we're uploading new ones
+      const thumbnailData = await s3.send(new DeleteObjectCommand({
+        Bucket: process.env.AWS_BUCKET_NAME,
+        Key: character.thumbnailKey,
+      }));
+      const imgData = await s3.send(new DeleteObjectCommand({
+        Bucket: process.env.AWS_BUCKET_NAME,
+        Key: character.imgKey,
+      }));
+
+      // Update fields
+      character.name = req.body.name;
+      character.title = req.body.title;
+      character.vision = mongoose.Types.ObjectId(req.body.vision);
+      // If no weapon equipped, set value to null
+      character.weapon = (req.body.weapon === '') ? null : mongoose.Types.ObjectId(req.body.weapon);
+      character.role = mongoose.Types.ObjectId(req.body.role);
+      character.rating = req.body.rating;
+      character.amount = req.body.amount;
+      character.thumbnail = req.files.thumbnail[0].location;
+      character.thumbnailKey = req.files.thumbnail[0].key;
+      character.img = req.files.img[0].location;
+      character.imgKey = req.files.img[0].key;
+      await character.save();
+
+      return res.status(200).json(character);
+      
+    } catch (err) {
+      return next(err);
+    }
+  }
 ];
 
 /* GET character details */

@@ -44,12 +44,15 @@ const uploadImage = multer({
 /* GET characters*/
 router.get('/characters', characterController.getCharacters);
 
-/* POST to characters */
 const fields = [
   { name: 'img'},
   { name: 'thumbnail'}
 ];
+/* POST to characters */
 router.post('/characters', uploadImage.fields(fields), characterController.createCharacter);
+
+/* UPDATE character */
+router.put('/characters/:id', uploadImage.fields(fields), characterController.updateCharacter);
 
 /* GET character details */
 router.get('/characters/:id', characterController.getCharacterDetail);

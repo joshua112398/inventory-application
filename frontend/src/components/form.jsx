@@ -64,6 +64,18 @@ function Form({
             setRoleData(existingData);
           } else if (group === 'visions') {
             setVisionData(existingData);
+          } else if (group === 'characters') {
+            setCharacterData({
+              name: existingData.name,
+              title: existingData.title,
+              vision: existingData.vision._id,
+              weapon: existingData.weapon._id,
+              role: existingData.role[0]._id,
+              rating: existingData.rating,
+              amount: existingData.amount,
+              thumbnail: null,
+              img: null,
+            });
           }
         }
       } catch (err) {
@@ -237,6 +249,7 @@ function Form({
               className="text-black"
               id="role"
               name="role"
+              value={characterData.role}
               onChange={(e) => {
                 setCharacterData({
                   ...characterData,
