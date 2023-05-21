@@ -105,12 +105,20 @@ function DetailPage({ group }) {
   return (
     <>
       {renderDetail(currentGroup)}
-      <button className="text-rose-600 p-4" onClick={toggleForm}>
-        Update
-      </button>
-      <button className="text-rose-600 p-4" onClick={toggleDeletePopup}>
-        Delete
-      </button>
+      <div className="flex gap-4 p-4 justify-start">
+        <button
+          className="text-white p-2 ease-in hover:scale-110 border-2 rounded-xl"
+          onClick={toggleForm}
+        >
+          Update
+        </button>
+        <button
+          className="text-rose-600 p-2 ease-in hover:scale-110 border-2 border-rose-600 rounded-xl"
+          onClick={toggleDeletePopup}
+        >
+          Delete
+        </button>
+      </div>
       <Form
         group={currentGroup}
         isVisible={formVisibility}

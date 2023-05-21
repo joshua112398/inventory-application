@@ -20,3 +20,7 @@ Using the <Link> component to go to another route that reuses the same component
 component, causing it to retain the state that it had before but having the new prop that got passed to it. This caused a desync between the prop and the data it's trying to render since useEffect's fetch() does not run until after the first render. Thus, for the first render, it saw that the new prop is Character, but the state still contains info for a Vision. So when it tries to use the template for Character to render it, it doesn't see the info it needs from state and throws an error due to undefined fields.
 
 To fix this, I created a new state that holds the previous prop Prop A and had the render method check this state instead of checking the passed prop (Prop B) directly. The state will retain Prop A, and so the first render will use the correct template Prop A for the old data, and then useEffect is finally run which will update the state to contain Prop B and fetch the new data which needs to use Prop B as a template, and so the second render will now use the new template with the new data. 
+
+---
+
+I had to use the useNavigate() hook from react router instead of Link so that I can delay the rerouting until a fetch promise has returned (for deleting objects). This is to ensure that the deleted object won't still be shown in the list of items.

@@ -57,8 +57,11 @@ function DeletePopup({ visible, toggleVisibility, group, name, id }) {
     if (type === 'character' || conflictingCharacters.length === 0) {
       return (
         <>
-          <p>Are you sure you want to delete? </p>
-          <button onClick={deleteItem} className="text-rose-600 p-4">
+          <p>Are you sure you want to delete {name}? </p>
+          <button
+            className="text-rose-600 p-2 ease-in hover:scale-105 border-2 border-rose-600 rounded-xl"
+            onClick={deleteItem}
+          >
             Delete
           </button>
         </>
@@ -73,7 +76,6 @@ function DeletePopup({ visible, toggleVisibility, group, name, id }) {
             {type}. Please update or delete them first.
           </p>
           {displayConflictingCharacters()}
-          <button className="text-rose-600 p-4">Delete</button>
         </>
       );
     }
@@ -85,7 +87,7 @@ function DeletePopup({ visible, toggleVisibility, group, name, id }) {
         id="modal"
         className="z-20 fixed left-0 top-0 w-full h-screen bg-black/70 flex justify-center items-center"
       >
-        <div className="relative w-4/5 max-w-lg max-h-full bg-sky-900 text-white p-8 rounded-md overflow-auto">
+        <div className="relative w-4/5 max-w-lg max-h-full bg-sky-900 text-white p-8 rounded-md overflow-auto gap-4 flex flex-col">
           <button onClick={toggleVisibility} className="absolute right-4 top-2">
             X
           </button>
