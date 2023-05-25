@@ -1,6 +1,12 @@
 import { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import characterIcon from '../assets/character-svgrepo-com.svg';
+import homeIcon from '../assets/home-svgrepo-com.svg';
+import menuIcon from '../assets/menu-svgrepo-com.svg';
+import weaponIcon from '../assets/sword-svgrepo-com.svg';
+import visionIcon from '../assets/gem-1-svgrepo-com.svg';
+import roleIcon from '../assets/book-closed-svgrepo-com.svg';
+import closeIcon from '../assets/close-mini-1522-svgrepo-com.svg';
 
 function Sidebar() {
   const [showMenu, setShowMenu] = useState(false);
@@ -34,10 +40,7 @@ function Sidebar() {
           className="hover:scale-110 ease-in p-1 sm:hidden block"
           onClick={toggleMenuVisibility}
         >
-          <img
-            className="h-16 stroke-white"
-            src="../src/assets/menu-svgrepo-com.svg"
-          />
+          <img className="h-16 stroke-white" src={menuIcon} />
         </button>
       </div>
 
@@ -64,10 +67,7 @@ function Sidebar() {
               }
               onClick={toggleMenuVisibility}
             >
-              <img
-                className="h-8 stroke-white"
-                src="../src/assets/close-mini-1522-svgrepo-com.svg"
-              />
+              <img className="h-8 stroke-white" src={closeIcon} />
             </button>
           </div>
           <li className="ease-in duration-100 overflow-hidden rounded-xl hover:bg-sky-950 active:bg-sky-950 h-16 w-full">
@@ -77,10 +77,7 @@ function Sidebar() {
               onClick={toggleMenuVisibility}
             >
               <div className="h-full">
-                <img
-                  className="h-full stroke-white"
-                  src="../src/assets/home-svgrepo-com.svg"
-                />
+                <img className="h-full stroke-white" src={homeIcon} />
               </div>
               <p className="text-lg">Home</p>
             </NavLink>
@@ -104,10 +101,7 @@ function Sidebar() {
               onClick={toggleMenuVisibility}
             >
               <div className="h-full">
-                <img
-                  className="h-full stroke-white"
-                  src="../src/assets/gem-1-svgrepo-com.svg"
-                />
+                <img className="h-full stroke-white" src={visionIcon} />
               </div>
               <p className="text-lg">Visions</p>
             </NavLink>
@@ -119,10 +113,7 @@ function Sidebar() {
               onClick={toggleMenuVisibility}
             >
               <div className="h-full">
-                <img
-                  className="h-full stroke-white"
-                  src="../src/assets/sword-svgrepo-com.svg"
-                />
+                <img className="h-full stroke-white" src={weaponIcon} />
               </div>
               <p className="text-lg">Weapons</p>
             </NavLink>
@@ -134,10 +125,7 @@ function Sidebar() {
               onClick={toggleMenuVisibility}
             >
               <div className="h-full aspect-square flex items-center">
-                <img
-                  className="h-3/4 stroke-white"
-                  src="../src/assets/book-closed-svgrepo-com.svg"
-                />
+                <img className="h-3/4 stroke-white" src={roleIcon} />
               </div>
               <p className="text-lg">Roles</p>
             </NavLink>
