@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
+import characterIcon from '../assets/character-svgrepo-com.svg';
 
 function Sidebar() {
   const [showMenu, setShowMenu] = useState(false);
@@ -91,10 +92,7 @@ function Sidebar() {
               onClick={toggleMenuVisibility}
             >
               <div className="h-full">
-                <img
-                  className="h-full stroke-white"
-                  src="../src/assets/character-svgrepo-com.svg"
-                />
+                <img className="h-full stroke-white" src={characterIcon} />
               </div>
               <p className="text-lg">Characters</p>
             </NavLink>

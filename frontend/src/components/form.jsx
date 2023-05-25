@@ -110,7 +110,7 @@ function Form({
       });
       const responseConverted = await response.json();
 
-      // If POST was successful without errors, hide the form. Else, save the errors so it can
+      // If POST/PUT was successful without errors, hide the form. Else, save the errors so it can
       // be displayed on the form to let the user know what to fix.
       if (response.ok === true) {
         toggleForm();
@@ -129,7 +129,14 @@ function Form({
       let key = 0;
       return postErrors.map((error) => {
         key += 1;
-        return <p key={key}>{error.msg}</p>;
+        return (
+          <p
+            className="block border-2 border-red-500 text-red-500 p-2"
+            key={key}
+          >
+            {error.msg}
+          </p>
+        );
       });
     } else {
       return null;
@@ -331,8 +338,13 @@ function Form({
               }}
             />
           </div>
-          <button type="submit">Submit</button>
-          {showPostErrors()}
+          <button
+            type="submit"
+            className="border-white border-2 self-center p-2 hover:scale-105"
+          >
+            Submit
+          </button>
+          <div className="flex flex-col gap-2">{showPostErrors()}</div>
         </form>
       </div>
     );
@@ -382,8 +394,13 @@ function Form({
               name="color"
             />
           </div>
-          <button type="submit">Submit</button>
-          {showPostErrors()}
+          <button
+            className="border-white border-2 self-center p-2 hover:scale-105"
+            type="submit"
+          >
+            Submit
+          </button>
+          <div className="flex flex-col gap-2">{showPostErrors()}</div>
         </form>
       </div>
     );
@@ -434,8 +451,13 @@ function Form({
               rows="6"
             ></textarea>
           </div>
-          <button type="submit">Submit</button>
-          {showPostErrors()}
+          <button
+            type="submit"
+            className="border-white border-2 self-center p-2 hover:scale-105"
+          >
+            Submit
+          </button>
+          <div className="flex flex-col gap-2">{showPostErrors()}</div>
         </form>
       </div>
     );
@@ -486,8 +508,13 @@ function Form({
               rows="6"
             ></textarea>
           </div>
-          <button type="submit">Submit</button>
-          {showPostErrors()}
+          <button
+            type="submit"
+            className="border-white border-2 self-center p-2 hover:scale-105"
+          >
+            Submit
+          </button>
+          <div className="flex flex-col gap-2">{showPostErrors()}</div>
         </form>
       </div>
     );
